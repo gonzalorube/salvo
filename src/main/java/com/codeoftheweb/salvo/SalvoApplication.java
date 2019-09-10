@@ -13,8 +13,11 @@ import org.springframework.context.annotation.Bean;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 @SpringBootApplication
@@ -25,22 +28,39 @@ public class SalvoApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository){
+	public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository){
 		return (args) -> {
 			Date date = new Date();
-			//Instant dateJoined = Instant.parse("2018-17-02T15:20:15");
+			//Date date2 = Date.from(dateJoined);
+
+			Game game1 = new Game(date);
+			Game game2 = new Game(Date.from(date.toInstant().plusSeconds(3600)));
+			Game game3 = new Game(Date.from(date.toInstant().plusSeconds(7200)));
+			//game1.setCreationDate();
+
+			Player player1 = new Player("Jack", "Bauer", "j.bauer@ctu.gov");
+			Player player2 = new Player("Chloe", "O'Brian", "c.obrian@ctu.gov");
+			Player player3 = new Player("Kim", "Bauer", "kim_bauer@gmail.com");
+			Player player4 = new Player("Tony", "Almeida", "t.almeida@ctu.gov");
+
 			// save a couple of players
-			playerRepository.save(new Player("Jack", "Bauer", "j.bauer@ctu.gov"));
-			playerRepository.save(new Player("Chloe", "O'Brian", "c.obrian@ctu.gov"));
-			playerRepository.save(new Player("Kim", "Bauer", "kim_bauer@gmail.com"));
-			playerRepository.save(new Player("Tony", "Almeida", "t.almeida@ctu.gov"));
+			player1 = playerRepository.save(player1);
+			player2 = playerRepository.save(player2);
+			player3 = playerRepository.save(player3);
+			player4 = playerRepository.save(player4);
 
-			gameRepository.save(new Game(1, date));
-			gameRepository.save(new Game(2, Date.from(date.toInstant().plusSeconds(3600))));
-			gameRepository.save(new Game(3, Date.from(date.toInstant().plusSeconds(7200))));
+			game1= gameRepository.save(game1);
+			game2= gameRepository.save(game2);
+			game3 = gameRepository.save(game3);
 
-			//gamePlayerRepository.save(new GamePlayer(1, Date.from(dateJoined)));
-			//gamePlayerRepository.save(new GamePlayer(1, 2008-08-03T03:20:00, 1, 2));
+			//Player testPlayer = new Player();
+			//testPlayer.setId(player2.getId());
+			gamePlayerRepository.save(new GamePlayer(date, game1, player1));
+			gamePlayerRepository.save(new GamePlayer(date, game1, player2));
+			gamePlayerRepository.save(new GamePlayer(Date.from(date.toInstant().plusSeconds(3600)), game2, player1));
+			gamePlayerRepository.save(new GamePlayer(Date.from(date.toInstant().plusSeconds(3600)), game2, player2));
+			gamePlayerRepository.save(new GamePlayer(Date.from(date.toInstant().plusSeconds(3600)), game3, player2));
+			gamePlayerRepository.save(new GamePlayer(Date.from(date.toInstant().plusSeconds(3600)), game3, player4));
 		};
 	}
 

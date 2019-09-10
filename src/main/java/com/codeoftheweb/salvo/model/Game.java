@@ -21,6 +21,10 @@ public class Game {
     public Game(){
     }
 
+    public Game(Date creationDate){
+        this.creationDate = creationDate;
+    }
+
     public Game(long id, Date creationDate){
         this.id = id;
         this.creationDate = creationDate;

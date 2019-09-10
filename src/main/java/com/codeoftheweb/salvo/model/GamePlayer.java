@@ -26,6 +26,12 @@ public class GamePlayer {
     public GamePlayer(){
     }
 
+    public GamePlayer(Date joinDate, Game game, Player player){
+        this.joinDate = joinDate;
+        this.game = game;
+        this.player = player;
+    }
+
     public GamePlayer(long id, Date joinDate, Game game, Player player){
         this.id = id;
         this.joinDate = joinDate;
