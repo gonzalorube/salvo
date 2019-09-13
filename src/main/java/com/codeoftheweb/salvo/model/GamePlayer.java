@@ -3,17 +3,18 @@ package com.codeoftheweb.salvo.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 public class GamePlayer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
 
-    private Date joinDate;
+    private LocalDateTime joinDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="game_id")
@@ -22,17 +23,24 @@ public class GamePlayer {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="player_id")
     private Player player;
+    private String userName;
 
     public GamePlayer(){
     }
 
-    public GamePlayer(Date joinDate, Game game, Player player){
+    public GamePlayer(LocalDateTime joinDate, Game game, Player player){
         this.joinDate = joinDate;
         this.game = game;
         this.player = player;
     }
 
-    public GamePlayer(long id, Date joinDate, Game game, Player player){
+    public GamePlayer(LocalDateTime joinDate, Game game, String userName){
+        this.joinDate = joinDate;
+        this.game = game;
+        this.userName = userName;
+    }
+
+    public GamePlayer(long id, LocalDateTime joinDate, Game game, Player player){
         this.id = id;
         this.joinDate = joinDate;
         this.game = game;
@@ -47,11 +55,11 @@ public class GamePlayer {
         this.id = id;
     }
 
-    public Date getJoinDate(){
+    public LocalDateTime getJoinDate(){
         return joinDate;
     }
 
-    public void setJoinDate(Date joinDate){
+    public void setJoinDate(LocalDateTime joinDate){
         this.joinDate = joinDate;
     }
 
@@ -70,4 +78,14 @@ public class GamePlayer {
     public void setPlayer(Player player){
         this.player = player;
     }
+
+    public String getUserName(){
+        return userName;
+    }
+
+    public void setUserName(String userName){
+        this.userName = userName;
+    }
 }
+
+
