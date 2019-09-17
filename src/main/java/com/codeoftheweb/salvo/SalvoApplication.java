@@ -63,8 +63,8 @@ public class SalvoApplication {
 
 			//Player testPlayer = new Player();
 			//testPlayer.setId(player2.getId());
-			gamePlayerRepository.save(new GamePlayer(date, game1, player1.getUserName()));
-			gamePlayerRepository.save(new GamePlayer(date, game1, player2.getUserName()));
+			gamePlayerRepository.save(new GamePlayer(date, game1, player1));
+			gamePlayerRepository.save(new GamePlayer(date, game1, player2));
 			gamePlayerRepository.save(new GamePlayer(date.plus(1, ChronoUnit.HOURS), game2, player1));
 			gamePlayerRepository.save(new GamePlayer(date.plus(1, ChronoUnit.HOURS), game2, player1));
 			gamePlayerRepository.save(new GamePlayer(date.plus(2, ChronoUnit.HOURS), game3, player2));
