@@ -26,23 +26,4 @@ public class SalvoController {
     public List<Salvo> getAll(){
         return repo.findAll();
     }
-
-    @RequestMapping("api/games")
-    Set<GameRepository> getAllGames;
-    public Set<GameRepository> getAllGames(){
-        return getAllGames.findAll();
-    }
-
-    public List<Long> getGameIds() {
-        List<Long> result = this.gameRepo.findAll().stream().map(Game::getId).collect(Collectors.toList());
-
-       /* List<Salvo> salvos = repo.findAll();
-        List<Long> idSalvos = new ArrayList<>();
-        for (Salvo salvo: salvos) {
-            idSalvos.add(salvo.getId());
-        } */
-        return result; //return idGames;
-    }
-
-
 }
