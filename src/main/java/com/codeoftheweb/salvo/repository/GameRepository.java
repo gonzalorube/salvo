@@ -8,4 +8,5 @@ import java.util.Set;
 
 @RepositoryRestResource
 public interface GameRepository extends JpaRepository<Game, Long> {
+
 }

@@ -1,11 +1,15 @@
 package com.codeoftheweb.salvo.controller;
 
+import com.codeoftheweb.salvo.model.Game;
 import com.codeoftheweb.salvo.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -19,8 +23,18 @@ public class GameController {
  //       return gameRepo.findAll();
     //  }
 
-    public List<Long> getGameIds() {
-        return this.gameRepo.findAll().stream().map(game -> game.getId()).collect(Collectors.toList());
+    public Map<String, Object> getGameIds() {
+    //    return this.gameRepo.findAll().stream().map(game -> game.getId()).collect(Collectors.toList());
+        List<Game> gamesList = gameRepo.findAll();
+        Map<String, Object> result = new HashMap<>();
+        List<Long> gameIds = new ArrayList<>();
+        for (Game game: gamesList){
+            result.put(Long.toString(game.getId()), game.getCreationDate());
+        }
+        //gamesList.forEach((id, creationDate) -> result.put(gamesList.getId(), ));
+        //    result.put(gamesList.getId(), gamesList.getCreationDate());
+        //}
+        return result;
     }
 }
 
