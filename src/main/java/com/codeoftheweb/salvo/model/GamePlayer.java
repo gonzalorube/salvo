@@ -34,18 +34,18 @@ public class GamePlayer {
         this.player = player;
     }
 
-    public GamePlayer(LocalDateTime joinDate, Game game, String userName){
+    /* public GamePlayer(LocalDateTime joinDate, Game game, String userName){
         this.joinDate = joinDate;
         this.game = game;
         this.userName = userName;
-    }
+    }*/
 
-    public GamePlayer(long id, LocalDateTime joinDate, Game game, Player player){
+    /* public GamePlayer(long id, LocalDateTime joinDate, Game game, Player player){
         this.id = id;
         this.joinDate = joinDate;
         this.game = game;
         this.player = player;
-    }
+    }*/
 
     public long getId(){
         return id;

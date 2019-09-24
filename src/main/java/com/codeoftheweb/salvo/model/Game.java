@@ -52,4 +52,7 @@ public class Game {
         gamePlayer.setGame(this);
         gamePlayers.add(gamePlayer);
     }
+    public GamePlayer getGamePlayer(){
+        return gamePlayers;
+    }
 }
