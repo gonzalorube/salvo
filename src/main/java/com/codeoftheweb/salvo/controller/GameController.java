@@ -2,8 +2,10 @@ package com.codeoftheweb.salvo.controller;
 
 import com.codeoftheweb.salvo.model.Game;
 import com.codeoftheweb.salvo.model.GamePlayer;
+import com.codeoftheweb.salvo.model.Player;
 import com.codeoftheweb.salvo.repository.GamePlayerRepository;
 import com.codeoftheweb.salvo.repository.GameRepository;
+import com.codeoftheweb.salvo.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,17 +18,16 @@ public class GameController {
 
     @Autowired
     private GameRepository gameRepo;
+    @Autowired
     private GamePlayerRepository gamePlayerRepo;
+    @Autowired
+    private PlayerRepository playerRepo;
 
     @RequestMapping("/api/games")
- //   public List<Game> getAll() {
- //       return gameRepo.findAll();
-    //  }
 
-    public List<Map<String, Object>> getGameIds() {
+    private List<Map<String, Object>> getGames() {
             // return this.gameRepo.findAll().stream().map(game -> game.getId()).collect(Collectors.toList());
         List<Game> gamesList = gameRepo.findAll();
-        List<GamePlayer> gamePlayerList = gamePlayerRepo.findAll();
         List<Map<String, Object>> result = new ArrayList<>();
             // List<Long> gameIds = new ArrayList<>();
 
@@ -35,16 +36,50 @@ public class GameController {
             Map <String, Object> mapResult = new LinkedHashMap<>();
             mapResult.put("id", game.getId());
             mapResult.put("created", game.getCreationDate());
+            mapResult.put("gamePlayers", getGamePlayers(game.getId()));
 
-            for(Set<GamePlayer> gamePlayer: gamePlayerList){
-                mapResult.put("gamePlayers", gamePlayer.getPlayer());
-            }
             result.add(mapResult);
         }
             //gamesList.forEach((id, creationDate) -> result.put(gamesList.getId(), ));
             // result.put(gamesList.getId(), gamesList.getCreationDate());
             //}
         return result;
+    }
+    private Map<String, Object> getGamePlayers(Long id) {
+
+        List<GamePlayer> gamePlayerList = gamePlayerRepo.findAll();
+        Map <String, Object> gamePlayerMap = new LinkedHashMap<>();
+        //List<Map<String, Object>> gamePlayerResult = new ArrayList<>();
+
+        for (GamePlayer gamePlayer : gamePlayerList){
+
+            if(gamePlayer.getGame().getId().equals(id)) {
+                gamePlayerMap.put("id", gamePlayer.getId());
+                gamePlayerMap.put("player", getPlayersInGame(gamePlayer.getPlayer().getId()));
+                //gamePlayerResult.add(gamePlayerMap);
+            }
+        }
+
+        return gamePlayerMap;
+    }
+
+    private List<Map<String, Object>> getPlayersInGame(Long id) {
+
+        List<Player> playerList = playerRepo.findAll();
+        Map <String, Object> playerMap = new LinkedHashMap<>();
+        List<Map<String, Object>> playerResult = new ArrayList<>();
+
+        for (Player player : playerList) {
+
+            if(player.getId().equals(id)) {
+                playerMap.put("id", player.getId());
+                playerMap.put("email", player.getUserName());
+                playerResult.add(playerMap);
+            }
+        }
+
+        return playerResult;
+
     }
 }
 

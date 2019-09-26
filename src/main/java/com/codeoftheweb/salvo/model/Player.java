@@ -12,7 +12,7 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
 
-    private long id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String userName;
@@ -28,11 +28,11 @@ public class Player {
         this.userName = user;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

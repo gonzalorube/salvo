@@ -1,5 +1,6 @@
 package com.codeoftheweb.salvo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
 
-    private long id;
+    private Long id;
 
     private LocalDateTime creationDate = LocalDateTime.now();
 
@@ -27,16 +28,16 @@ public class Game {
         this.creationDate = creationDate;
     }
 
-    public Game(long id, LocalDateTime creationDate){
+    /* public Game(long id, LocalDateTime creationDate){
         this.id = id;
         this.creationDate = creationDate;
-    }
+    } */
 
-    public long getId(){
+    public Long getId(){
         return id;
     }
 
-    public void setId(long id){
+    public void setId(Long id){
         this.id = id;
     }
 
@@ -52,7 +53,8 @@ public class Game {
         gamePlayer.setGame(this);
         gamePlayers.add(gamePlayer);
     }
-    public GamePlayer getGamePlayer(){
+    @JsonIgnore
+     public Set<GamePlayer> getPlayers(){
         return gamePlayers;
     }
 }
