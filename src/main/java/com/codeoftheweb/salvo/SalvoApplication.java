@@ -30,8 +30,7 @@ public class SalvoApplication {
 	@Bean
 	public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository){
 		return (args) -> {
-			LocalDateTime date = LocalDateTime.now();
-			//Date date2 = Date.from(dateJoined);
+			LocalDateTime date = LocalDateTime.of(2018, 2, 17, 15, 20, 15);
 
 			Game game1 = new Game(date);
 			Game game2 = new Game(date.plus(1, ChronoUnit.HOURS));
@@ -39,7 +38,6 @@ public class SalvoApplication {
 			Game game4 = new Game(date.plus(3, ChronoUnit.HOURS));
 			Game game5 = new Game(date.plus(4, ChronoUnit.HOURS));
 			Game game6 = new Game(date.plus(5, ChronoUnit.HOURS));
-			//game1.setCreationDate();
 
 			Player player1 = new Player("Jack", "Bauer", "j.bauer@ctu.gov");
 			Player player2 = new Player("Chloe", "O'Brian", "c.obrian@ctu.gov");
@@ -61,14 +59,7 @@ public class SalvoApplication {
 			game5 = gameRepository.save(game5);
 			game6 = gameRepository.save(game6);
 
-
-			//Player testPlayer = new Player();
-			//testPlayer.setId(player2.getId());
-			GamePlayer gamePlayer1 = gamePlayerRepository.save(new GamePlayer(date, game1, player1));
-			GamePlayer gamePlayer2 = gamePlayerRepository.save(new GamePlayer(date, game1, player2));
-
-			// gamePlayer2 = gamePlayerRepository.save(new GamePlayer(date, game1, player2));
-			/* gamePlayerRepository.save(new GamePlayer(date.plus(1, ChronoUnit.HOURS), game1, player1));
+			gamePlayerRepository.save(new GamePlayer(date.plus(1, ChronoUnit.HOURS), game1, player1));
 			gamePlayerRepository.save(new GamePlayer(date.plus(1, ChronoUnit.HOURS), game1, player2));
 			gamePlayerRepository.save(new GamePlayer(date.plus(1, ChronoUnit.HOURS), game2, player1));
 			gamePlayerRepository.save(new GamePlayer(date.plus(1, ChronoUnit.HOURS), game2, player2));
@@ -78,10 +69,8 @@ public class SalvoApplication {
 			gamePlayerRepository.save(new GamePlayer(date.plus(3, ChronoUnit.HOURS), game4, player2));
 			gamePlayerRepository.save(new GamePlayer(date.plus(4, ChronoUnit.HOURS), game5, player4));
 			gamePlayerRepository.save(new GamePlayer(date.plus(4, ChronoUnit.HOURS), game5, player1));
-			gamePlayerRepository.save(new GamePlayer(date.plus(5, ChronoUnit.HOURS), game6, player5));*/
+			gamePlayerRepository.save(new GamePlayer(date.plus(5, ChronoUnit.HOURS), game6, player5));
 
-			// game1 = game1.addGamePlayer(gamePlayer1);
-			// game1.addGamePlayer(gamePlayer2);
 		};
 	}
 
