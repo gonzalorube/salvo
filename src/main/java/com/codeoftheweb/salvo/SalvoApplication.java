@@ -30,8 +30,10 @@ public class SalvoApplication {
 	@Bean
 	public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository){
 		return (args) -> {
+			// Instancio la fecha pedida
 			LocalDateTime date = LocalDateTime.of(2018, 2, 17, 15, 20, 15);
 
+			// Instancio los 6 juegos
 			Game game1 = new Game(date);
 			Game game2 = new Game(date.plus(1, ChronoUnit.HOURS));
 			Game game3 = new Game(date.plus(2, ChronoUnit.HOURS));
@@ -39,19 +41,21 @@ public class SalvoApplication {
 			Game game5 = new Game(date.plus(4, ChronoUnit.HOURS));
 			Game game6 = new Game(date.plus(5, ChronoUnit.HOURS));
 
+			// Instancio los 5 jugadores
 			Player player1 = new Player("Jack", "Bauer", "j.bauer@ctu.gov");
 			Player player2 = new Player("Chloe", "O'Brian", "c.obrian@ctu.gov");
 			Player player3 = new Player("Kim", "Bauer", "kim_bauer@gmail.com");
 			Player player4 = new Player("Tony", "Almeida", "t.almeida@ctu.gov");
 			Player player5 = new Player("d", "Palmer", "d.palmer@whitehouse.gov");
 
-			// save a couple of players
+			// Guardo los jugadores
 			player1 = playerRepository.save(player1);
 			player2 = playerRepository.save(player2);
 			player3 = playerRepository.save(player3);
 			player4 = playerRepository.save(player4);
 			player5 = playerRepository.save(player5);
 
+			// Guardo los juegos
 			game1 = gameRepository.save(game1);
 			game2 = gameRepository.save(game2);
 			game3 = gameRepository.save(game3);
@@ -59,6 +63,7 @@ public class SalvoApplication {
 			game5 = gameRepository.save(game5);
 			game6 = gameRepository.save(game6);
 
+			// Instancio y guardo jugadores en sendos juegos
 			gamePlayerRepository.save(new GamePlayer(date.plus(1, ChronoUnit.HOURS), game1, player1));
 			gamePlayerRepository.save(new GamePlayer(date.plus(1, ChronoUnit.HOURS), game1, player2));
 			gamePlayerRepository.save(new GamePlayer(date.plus(1, ChronoUnit.HOURS), game2, player1));
