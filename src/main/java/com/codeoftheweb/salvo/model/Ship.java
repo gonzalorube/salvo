@@ -3,6 +3,7 @@ package com.codeoftheweb.salvo.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,7 +20,7 @@ public class Ship {
 
     @ElementCollection
     @Column(name="ship_locations")
-    private List<String> shipLocationsList;
+    private List<String> shipLocationsList = new ArrayList();
 
     public Long getId() {
         return id;
@@ -51,5 +52,10 @@ public class Ship {
 
     public void setGamePlayer(GamePlayer gamePlayer) {
         this.gamePlayer = gamePlayer;
+    }
+
+    public void addShip(Ship ship){
+        .add(ship);
+        setGamePlayer(this.getGamePlayer());
     }
 }
