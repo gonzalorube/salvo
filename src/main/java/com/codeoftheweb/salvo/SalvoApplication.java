@@ -3,9 +3,11 @@ package com.codeoftheweb.salvo;
 import com.codeoftheweb.salvo.model.Game;
 import com.codeoftheweb.salvo.model.GamePlayer;
 import com.codeoftheweb.salvo.model.Player;
+import com.codeoftheweb.salvo.model.Ship;
 import com.codeoftheweb.salvo.repository.GamePlayerRepository;
 import com.codeoftheweb.salvo.repository.GameRepository;
 import com.codeoftheweb.salvo.repository.PlayerRepository;
+import com.codeoftheweb.salvo.repository.ShipRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,8 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 
 @SpringBootApplication
@@ -28,7 +29,7 @@ public class SalvoApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository){
+	public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository){
 		return (args) -> {
 			// Instancio la fecha pedida
 			LocalDateTime date = LocalDateTime.of(2018, 2, 17, 15, 20, 15);
@@ -63,19 +64,49 @@ public class SalvoApplication {
 			game5 = gameRepository.save(game5);
 			game6 = gameRepository.save(game6);
 
-			// Instancio y guardo jugadores en sendos juegos
-			gamePlayerRepository.save(new GamePlayer(date.plus(1, ChronoUnit.HOURS), game1, player1));
-			gamePlayerRepository.save(new GamePlayer(date.plus(1, ChronoUnit.HOURS), game1, player2));
-			gamePlayerRepository.save(new GamePlayer(date.plus(1, ChronoUnit.HOURS), game2, player1));
-			gamePlayerRepository.save(new GamePlayer(date.plus(1, ChronoUnit.HOURS), game2, player2));
-			gamePlayerRepository.save(new GamePlayer(date.plus(2, ChronoUnit.HOURS), game3, player2));
-			gamePlayerRepository.save(new GamePlayer(date.plus(2, ChronoUnit.HOURS), game3, player4));
-			gamePlayerRepository.save(new GamePlayer(date.plus(3, ChronoUnit.HOURS), game4, player1));
-			gamePlayerRepository.save(new GamePlayer(date.plus(3, ChronoUnit.HOURS), game4, player2));
-			gamePlayerRepository.save(new GamePlayer(date.plus(4, ChronoUnit.HOURS), game5, player4));
-			gamePlayerRepository.save(new GamePlayer(date.plus(4, ChronoUnit.HOURS), game5, player1));
-			gamePlayerRepository.save(new GamePlayer(date.plus(5, ChronoUnit.HOURS), game6, player5));
+			GamePlayer gamePlayer1 = new GamePlayer();
+			GamePlayer gamePlayer2 = new GamePlayer();
+			GamePlayer gamePlayer3 = new GamePlayer();
+			GamePlayer gamePlayer4 = new GamePlayer();
+			GamePlayer gamePlayer5 = new GamePlayer();
+			GamePlayer gamePlayer6 = new GamePlayer();
+			GamePlayer gamePlayer7 = new GamePlayer();
+			GamePlayer gamePlayer8 = new GamePlayer();
+			GamePlayer gamePlayer9 = new GamePlayer();
+			GamePlayer gamePlayer10 = new GamePlayer();
+			GamePlayer gamePlayer11 = new GamePlayer();
 
+			// Instancio y guardo jugadores en sendos juegos
+			gamePlayer1 = gamePlayerRepository.save(new GamePlayer(date.plus(1, ChronoUnit.HOURS), game1, player1));
+			gamePlayer2 = gamePlayerRepository.save(new GamePlayer(date.plus(1, ChronoUnit.HOURS), game1, player2));
+			gamePlayer3 = gamePlayerRepository.save(new GamePlayer(date.plus(1, ChronoUnit.HOURS), game2, player1));
+			gamePlayer4 = gamePlayerRepository.save(new GamePlayer(date.plus(1, ChronoUnit.HOURS), game2, player2));
+			gamePlayer5 = gamePlayerRepository.save(new GamePlayer(date.plus(2, ChronoUnit.HOURS), game3, player2));
+			gamePlayer6 = gamePlayerRepository.save(new GamePlayer(date.plus(2, ChronoUnit.HOURS), game3, player4));
+			gamePlayer7 = gamePlayerRepository.save(new GamePlayer(date.plus(3, ChronoUnit.HOURS), game4, player1));
+			gamePlayer8 = gamePlayerRepository.save(new GamePlayer(date.plus(3, ChronoUnit.HOURS), game4, player2));
+			gamePlayer9 = gamePlayerRepository.save(new GamePlayer(date.plus(4, ChronoUnit.HOURS), game5, player4));
+			gamePlayer10 = gamePlayerRepository.save(new GamePlayer(date.plus(4, ChronoUnit.HOURS), game5, player1));
+			gamePlayer11 = gamePlayerRepository.save(new GamePlayer(date.plus(5, ChronoUnit.HOURS), game6, player5));
+
+
+			gamePlayer1.addShip(new Ship("Submarine", Arrays.asList("E1", "F1", "G1")));
+			gamePlayer1.addShip(new Ship("Destroyer", Arrays.asList("H2", "H3", "H4")));
+			gamePlayer1.addShip(new Ship("Patro Boat", Arrays.asList("B4", "B5")));
+
+			gamePlayer2.addShip(new Ship("Destroyer", Arrays.asList("B5", "C5", "D5")));
+			gamePlayer2.addShip(new Ship("Patrol Boat", Arrays.asList("F1", "F2")));
+
+			gamePlayer3.addShip(new Ship("Patrol Boat", Arrays.asList("C6","C7")));
+			gamePlayer3.addShip(new Ship("Destroyer", Arrays.asList("B5", "C5", "D5")));
+
+			gamePlayer4.addShip(new Ship("Submarine", Arrays.asList("A2", "A3", "A4")));
+			gamePlayer4.addShip(new Ship("Patrol Boat", Arrays.asList("G6", "H6")));
+
+			gamePlayerRepository.save(gamePlayer1);
+			gamePlayerRepository.save(gamePlayer2);
+			gamePlayerRepository.save(gamePlayer3);
+			gamePlayerRepository.save(gamePlayer4);
 		};
 	}
 

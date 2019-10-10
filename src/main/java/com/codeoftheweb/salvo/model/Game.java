@@ -54,7 +54,7 @@ public class Game {
         gamePlayers.add(gamePlayer);
     }
     @JsonIgnore
-     public Set<GamePlayer> getPlayers(){
+     public Set<GamePlayer> getGamePlayers(){
         return gamePlayers;
     }
 }

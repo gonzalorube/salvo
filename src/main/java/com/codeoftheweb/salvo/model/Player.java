@@ -3,6 +3,8 @@ package com.codeoftheweb.salvo.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -67,6 +69,13 @@ public class Player {
     public void addGamePlayer(GamePlayer gamePlayer){
         gamePlayer.setPlayer(this);
         gamePlayers.add(gamePlayer);
+    }
+
+    public Map<String, Object> playerDTO(){
+        Map<String, Object> dto = new LinkedHashMap<>();
+        dto.put("id", this.getId());
+        dto.put("username", this.getUserName());
+        return dto;
     }
 
 }

@@ -25,27 +25,33 @@ public class GameController {
         // Itero la lista de juegos
         for (Game game: gamesList){
 
-            Map <String, Object> mapResult = new LinkedHashMap<>();
-            mapResult.put("id", game.getId()); // Por cada campo, busco id y fecha de creación
-            mapResult.put("created", game.getCreationDate()); // y los pongo en sus correspondientes campos
-            List<Map<String, Object>> gamePlayers = new ArrayList<>();
+            if(game != null) {
 
-            // Itero y obtengo los jugadores en cada juego
-            for ( GamePlayer gamePlayer: game.getPlayers()) {
+                Map<String, Object> mapResult = new LinkedHashMap<>();
+                mapResult.put("id", game.getId()); // Por cada campo, busco id y fecha de creación
+                mapResult.put("created", game.getCreationDate()); // y los pongo en sus correspondientes campos
+                List<Map<String, Object>> gamePlayers = new ArrayList<>();
 
-                Map<String, Object> gamePlayerDTO = new LinkedHashMap<>();
-                Map<String, Object> playerDTO = new LinkedHashMap<>();
+                // Itero y obtengo los jugadores en cada juego
+                for (GamePlayer gamePlayer : game.getGamePlayers()) {
 
-                gamePlayerDTO.put("id", gamePlayer.getId()); // Rescato id de jugador en juego y lo llevo a su campo
-                playerDTO.put("id", gamePlayer.getPlayer().getId()); // Traigo id de jugador
-                playerDTO.put("email", gamePlayer.getPlayer().getUserName()); // Traigo email de jugador
-                gamePlayerDTO.put("player", playerDTO); // Creo el campo "player", donde vuelco el id y el email y lo hago depender del id de jugador en juego
+                    if(gamePlayer != null){
 
-                gamePlayers.add(gamePlayerDTO); // Incorporo este tramo al general
+                    Map<String, Object> gamePlayerDTO = new LinkedHashMap<>();
+                    Map<String, Object> playerDTO = new LinkedHashMap<>();
+
+                    gamePlayerDTO.put("id", gamePlayer.getId()); // Rescato id de jugador en juego y lo llevo a su campo
+                    playerDTO.put("id", gamePlayer.getPlayer().getId()); // Traigo id de jugador
+                    playerDTO.put("email", gamePlayer.getPlayer().getUserName()); // Traigo email de jugador
+                    gamePlayerDTO.put("player", playerDTO); // Creo el campo "player", donde vuelco el id y el email y lo hago depender del id de jugador en juego
+
+                    gamePlayers.add(gamePlayerDTO); // Incorporo este tramo al general
+                    }
+                }
+
+                mapResult.put("gamePlayers", gamePlayers); // Creo el campo "gamePlayers", que envuelve lo anterior
+                result.add(mapResult); // Lo agrego a la lista resultante
             }
-
-            mapResult.put("gamePlayers", gamePlayers); // Creo el campo "gamePlayers", que envuelve lo anterior
-            result.add(mapResult); // Lo agrego a la lista resultante
         }
         return result;
     }
