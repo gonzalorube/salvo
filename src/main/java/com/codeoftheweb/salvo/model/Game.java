@@ -6,7 +6,10 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Game {
@@ -57,4 +60,5 @@ public class Game {
      public Set<GamePlayer> getGamePlayers(){
         return gamePlayers;
     }
+
 }
