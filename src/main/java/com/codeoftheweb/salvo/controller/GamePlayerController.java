@@ -49,10 +49,10 @@ public class GamePlayerController {
                         gamePlayerDTO.put("player", playerDTO); // Creo el campo "player", donde vuelco el id y el email y lo hago depender del id de jugador en juego
 
                         gamePlayers.add(gamePlayerDTO); // Incorporo este tramo al general
-
                 }
 
                 mapResult.put("gamePlayers", gamePlayers); // Creo el campo "gamePlayers", que envuelve lo anterior
+                mapResult.put("ships", gamePlayer.getShips().stream().map(Ship::shipDTO));
                 result.add(mapResult); // Lo agrego a la lista resultante
             } else {
                 mapResult.put("Offside error", "The ID you are looking for doesn't exist");
