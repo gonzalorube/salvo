@@ -103,10 +103,35 @@ public class SalvoApplication {
 			gamePlayer4.addShip(new Ship("Submarine", Arrays.asList("A2", "A3", "A4")));
 			gamePlayer4.addShip(new Ship("Patrol Boat", Arrays.asList("G6", "H6")));
 
+			gamePlayer5.addShip(new Ship("Destroyer", Arrays.asList("B5", "C5", "D5")));
+			gamePlayer5.addShip(new Ship("Patrol Boat", Arrays.asList("C6", "C7")));
+
+			gamePlayer6.addShip(new Ship("Submarine", Arrays.asList("A2", "A3", "A4")));
+			gamePlayer6.addShip(new Ship("Patrol Boat", Arrays.asList("G6", "H6")));
+
+			gamePlayer7.addShip(new Ship("Destroyer", Arrays.asList("B5", "C5", "D5")));
+			gamePlayer7.addShip(new Ship("Patrol Boat", Arrays.asList("C6", "C7")));
+
+			gamePlayer8.addShip(new Ship("Submarine", Arrays.asList("A2", "A3", "A4")));
+			gamePlayer8.addShip(new Ship("Patrol Boat", Arrays.asList("G6", "H6")));
+
+			gamePlayer9.addShip(new Ship("Destroyer", Arrays.asList("B5", "C5", "D5")));
+			gamePlayer9.addShip(new Ship("Patrol Boat", Arrays.asList("C6", "C7")));
+
+			gamePlayer10.addShip(new Ship("Submarine", Arrays.asList("A2", "A3", "A4")));
+			gamePlayer10.addShip(new Ship("Patrol Boat", Arrays.asList("G6", "H6")));
+
 			gamePlayerRepository.save(gamePlayer1);
 			gamePlayerRepository.save(gamePlayer2);
 			gamePlayerRepository.save(gamePlayer3);
 			gamePlayerRepository.save(gamePlayer4);
+			gamePlayerRepository.save(gamePlayer5);
+			gamePlayerRepository.save(gamePlayer6);
+			gamePlayerRepository.save(gamePlayer7);
+			gamePlayerRepository.save(gamePlayer8);
+			gamePlayerRepository.save(gamePlayer9);
+			gamePlayerRepository.save(gamePlayer10);
+
 		};
 	}
 

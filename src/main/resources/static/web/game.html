@@ -3,52 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Ship Locations!</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles/styles.css" />
+    <!-- <link rel="stylesheet" src="styles/styles.css" /> -->
 </head>
 <body>
 
-    <h2>Ship Locations!</h2>
+    <h1>Ship Locations!</h1>
+    <h3 id="players"></h3>
+
     <div class="container">
         <table class="table table-bordered table-responsive" id="ships-table">
             <tr>
-                <td class="cell"></td><th class="cell">1</th><th class="cell">2</th><th class="cell">3</th><th class="cell">4</th><th class="cell">5</th><th class="cell">6</th><th class="cell">7</th><th class="cell">8</th><th class="cell">9</th><th class="cell">10</th>
+                <td class="cell" id="prueba"></td><th class="cell">1</th><th class="cell">2</th><th class="cell">3</th><th class="cell">4</th><th class="cell">5</th><th class="cell">6</th><th class="cell">7</th><th class="cell">8</th><th class="cell">9</th><th class="cell">10</th>
             </tr>
             <tr>
-                <th class="cell">A</th><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+                <th class="cell">A</th><td class="cell" id="A1"></td><td class="cell" id="A2"></td><td class="cell" id="A3"></td><td class="cell" id="A4"></td><td class="cell" id="A5"></td><td class="cell" id="A6"></td><td class="cell" id="A7"></td><td class="cell" id="A8"></td><td class="cell" id="A9"></td><td class="cell" id="A10"></td>
             </tr>
             <tr>
-                <th class="cell">B</th><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+                <th class="cell">B</th><td class="cell" id="B1"></td><td class="cell" id="B2"></td><td class="cell" id="B3"></td><td class="cell" id="B4"></td><td class="cell" id="B5"></td><td class="cell" id="B6"></td><td class="cell" id="B7"></td><td class="cell" id="B8"></td><td class="cell" id="B9"></td><td class="cell" id="B10"></td>
             </tr>
             <tr>
-                <th class="cell">C</th><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+                <th class="cell">C</th><td class="cell" id="C1"></td><td class="cell" id="C2"></td><td class="cell" id="C3"></td><td class="cell" id="C4"></td><td class="cell" id="C5"></td><td class="cell" id="C6"></td><td class="cell" id="C7"></td><td class="cell" id="C8"></td><td class="cell" id="C9"></td><td class="cell" id="C10"></td>
             </tr>
             <tr>
-                <th class="cell">D</th><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+                <th class="cell">D</th><td class="cell" id="D1"></td><td class="cell" id="D2"></td><td class="cell" id="D3"></td><td class="cell" id="D4"></td><td class="cell" id="D5"></td><td class="cell" id="D6"></td><td class="cell" id="D7"></td><td class="cell" id="D8"></td><td class="cell" id="D9"></td><td class="cell" id="D10"></td>
             </tr>
             <tr>
-                <th class="cell">E</th><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+                <th class="cell">E</th><td class="cell" id="E1"></td><td class="cell" id="E2"></td><td class="cell" id="E3"></td><td class="cell" id="E4"></td><td class="cell" id="E5"></td><td class="cell" id="E6"></td><td class="cell" id="E7"></td><td class="cell" id="E8"></td><td class="cell" id="E9"></td><td class="cell" id="E10"></td>
             </tr>
             <tr>
-                <th class="cell">F</th><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+                <th class="cell">F</th><td class="cell" id="F1"></td><td class="cell" id="F2"></td><td class="cell" id="F3"></td><td class="cell" id="F4"></td><td class="cell" id="F5"></td><td class="cell" id="F6"></td><td class="cell" id="F7"></td><td class="cell" id="F8"></td><td class="cell" id="F9"></td><td class="cell" id="F10"></td>
             </tr>
             <tr>
-                <th class="cell">G</th><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+                <th class="cell">G</th><td class="cell" id="G1"></td><td class="cell" id="G2"></td><td class="cell" id="G3"></td><td class="cell" id="G4"></td><td class="cell" id="G5"></td><td class="cell" id="G6"></td><td class="cell" id="G7"></td><td class="cell" id="G8"></td><td class="cell" id="G9"></td><td class="cell" id="G10"></td>
             </tr>
             <tr>
-                <th class="cell">H</th><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+                <th class="cell">H</th><td class="cell" id="H1"></td><td class="cell" id="H2"></td><td class="cell" id="H3"></td><td class="cell" id="H4"></td><td class="cell" id="H5"></td><td class="cell" id="H6"></td><td class="cell" id="H7"></td><td class="cell" id="H8"></td><td class="cell" id="H9"></td><td class="cell" id="H10"></td>
             </tr>
             <tr>
-                <th class="cell">I</th><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+                <th class="cell">I</th><td class="cell" id="I1"></td><td class="cell" id="I2"></td><td class="cell" id="I3"></td><td class="cell" id="I4"></td><td class="cell" id="I5"></td><td class="cell" id="I6"></td><td class="cell" id="I7"></td><td class="cell" id="I8"></td><td class="cell" id="I9"></td><td class="cell" id="I10"></td>
             </tr>
             <tr>
-                <th class="cell">J</th><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td><td class="cell"></td>
+                <th class="cell">J</th><td class="cell" id="J1"></td><td class="cell" id="J2"></td><td class="cell" id="J3"></td><td class="cell" id="J4"></td><td class="cell" id="J5"></td><td class="cell" id="J6"></td><td class="cell" id="J7"></td><td class="cell" id="J8"></td><td class="cell" id="J9"></td><td class="cell" id="J10"></td>
             </tr>
 
         </table>
     </div>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="scripts/game.js"></script>
 </body>
 </html>
