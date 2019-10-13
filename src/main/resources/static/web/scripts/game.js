@@ -8,15 +8,16 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
-var prueba = document.getElementById("prueba");
+// var prueba = document.getElementById("prueba");
 
-
+// Construyo la URL que enviaré por parámetro a la llamada de AJAX
 function makeUrl() {
   var gamePlayer_Id = getParameterByName('gp');
   return '/api/game_view/' + gamePlayer_Id;
 }
-console.log(makeUrl());
+//  console.log(makeUrl());
 
+// Función AJAX para traer el JSON de cada gamePlayer
 function ajaxCallURL() {
     var ajxCll = $.ajax({
     url: makeUrl(),
@@ -24,17 +25,21 @@ function ajaxCallURL() {
     });
     return ajxCll;
 }
-ajaxCallURL().done(function(data) {
-    var playersTag = document.getElementById("players");
-    var versus = "";
-    var gpViewId = getParameterByName('gp');
 
-    console.log("listo el pollo");
-    console.log(data[0].ships);
+ajaxCallURL().done(function(data) {
+    var playersTag = document.getElementById("players"); // Traigo la etiqueta H3 del HTML
+    var versus = ""; // Inicializo la variable para los Strings que luego volcaré dentro de la etiqueta anterior
+    var gpViewId = getParameterByName('gp'); // Obtengo el parámetro que viaja en la variable gp de mi URL
+//    console.log("listo");
+//    console.log(data[0].ships);
+
+// Itero los barcos del gamePlayer
     var ships4Player = data[0].ships;
     for(e in ships4Player){
-        console.log(ships4Player[e].locations);
+//        console.log(ships4Player[e].locations);
+// Itero las ubicaciones de cada barco
         var shLoc4Play = ships4Player[e].locations;
+// Por cada String de ubicación del barco, busco la celda en la grilla y la pinto de un color
         for(i in shLoc4Play){
             console.log(shLoc4Play[i]);
             var cellId = document.getElementById(shLoc4Play[i]);
@@ -42,12 +47,15 @@ ajaxCallURL().done(function(data) {
         }
     }
     var gpViewId = getParameterByName('gp');
-    console.log(gpViewId);
+//    console.log(gpViewId);
+// Doble iteración para mostrar participantes
+// Por un problema de ordenamiento del Array,
+// no podía mostrar siempre en primer lugar al gp que está viendo el juego. Esta fue la solución:
     for(k in data[0].gamePlayers){
         var gppk = data[0].gamePlayers[k];
         if(data[0].gamePlayers[k].id == gpViewId){
             versus += gppk.player.email + " (you) vs ";
-            console.log("right");
+//            console.log("right");
         }
     }
     for(l in data[0].gamePlayers){
@@ -57,23 +65,5 @@ ajaxCallURL().done(function(data) {
          }
         // versus += " vs ";
     }
-    playersTag.innerHTML = versus;
+    playersTag.innerHTML = versus; // los Strings guardados en versus se convierten en HTML de la etiqueta H3 de game.html
 });
-/*        for(e in json){
-            var versus = document.getElementById("players");
-                if(json[e].id === viewGameId){
-                    for(i in json[e].gamePlayers){
-                        if(i.id === gpViewId){
-                            versus.innerText += i.player.email + " (you)";
-                            console.log("1 " + versus);
-                        } else {
-                            console.log("Fail");
-                        }
-                    }
-                }
-            } */
-
-/*     if(gpInGame != null){
-        versus.innerText += gpInGame[0].player.email + " (you) vs." + gpInGame[1].player.email;
-     }*/
-

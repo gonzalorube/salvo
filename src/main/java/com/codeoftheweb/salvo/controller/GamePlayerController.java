@@ -32,42 +32,31 @@ public class GamePlayerController {
         List<Map<String, Object>> gamePlayers = new ArrayList<>();
         // Itero la lista de juegos
 
-            if(gamePlayer != null) {
+
                 // Itero y obtengo los jugadores en cada juego
                 for (GamePlayer gamePlayerIt : gamePlayer.getGame().getGamePlayers()) {
 
-                    Map<String, Object> gamePlayerDTO = new LinkedHashMap<>();
-                    Map<String, Object> playerDTO = new LinkedHashMap<>();
-                    System.out.println(gamePlayerIt.getId());
-                    gamePlayerDTO.put("id", gamePlayerIt.getId()); // Rescato id de jugador en juego y lo llevo a su campo
-                    playerDTO.put("id", gamePlayerIt.getPlayer().getId()); // Traigo id de jugador
-                    playerDTO.put("email", gamePlayerIt.getPlayer().getUserName()); // Traigo email de jugador
-                    gamePlayerDTO.put("player", playerDTO); // Creo el campo "player", donde vuelco el id y el email y lo hago depender del id de jugador en juego
+                    if(gamePlayerIt != null) {
+                        Map<String, Object> gamePlayerDTO = new LinkedHashMap<>();
+                        Map<String, Object> playerDTO = new LinkedHashMap<>();
+                        // System.out.println(gamePlayerIt.getId());
+                        gamePlayerDTO.put("id", gamePlayerIt.getId()); // Rescato id de jugador en juego y lo llevo a su campo
+                        playerDTO.put("id", gamePlayerIt.getPlayer().getId()); // Traigo id de jugador
+                        playerDTO.put("email", gamePlayerIt.getPlayer().getUserName()); // Traigo email de jugador
+                        gamePlayerDTO.put("player", playerDTO); // Creo el campo "player", donde vuelco el id y el email y lo hago depender del id de jugador en juego
 
-                    gamePlayers.add(gamePlayerDTO); // Incorporo este tramo al general
+                        gamePlayers.add(gamePlayerDTO); // Incorporo este tramo al general
+
+                    } else {
+                        mapResult.put("Offside error", "The ID you are looking for doesn't exist");
+                        result.add(mapResult);
+                    }
                 }
 
                 mapResult.put("gamePlayers", gamePlayers); // Creo el campo "gamePlayers", que envuelve lo anterior
-                mapResult.put("ships", gamePlayer.getShips().stream().map(Ship::shipDTO));
-                result.add(mapResult); // Lo agrego a la lista resultante
-            } else {
-                mapResult.put("Offside error", "The ID you are looking for doesn't exist");
-                result.add(mapResult);
-            }
+                mapResult.put("ships", gamePlayer.getShips().stream().map(Ship::shipDTO)); // Incorporo los barcos, que surgen del DTO de Ship.java
+                result.add(mapResult); // Los agrego a la lista resultante
+
         return result;
     }
-
-   /* private Map<String, Object> gameView(GamePlayer gamePlayer){
-        Map<String,Object> gameViewDTO = new LinkedHashMap<>();
-
-        if(gamePlayer != null){
-            gameViewDTO.put("id", gamePlayer.getGame().getId());
-            gameViewDTO.put("creationDate", gamePlayer.getGame().getCreationDate());
-            gameViewDTO.put("gamePlayer", gamePlayer.getGame().getGamePlayers().stream().map(GamePlayer::gamePlayerDTO));
-        }else{
-            gameViewDTO.put("Total Kaos", "The game you are looking for doesn't exist");
-        }
-
-        return gameViewDTO;
-    }*/
 }
