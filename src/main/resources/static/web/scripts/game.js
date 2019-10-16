@@ -56,7 +56,7 @@ ajaxCallURL().done(function(data) {
                     } else {
                         for(m in salvoes4Player[c].locations){
                             if(salvoes4Player[c].locations[m].indexOf(shLoc4Play[i]) != -1){
-                                cellId.innerText = "HIT";
+                                cellId.innerText = "X" + "-T" + salvoes4Player[c].turn;
                                 cellId.style.color = "#FFF";
                             }
                         }
