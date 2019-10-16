@@ -2,6 +2,7 @@ package com.codeoftheweb.salvo.controller;
 
 import com.codeoftheweb.salvo.model.Game;
 import com.codeoftheweb.salvo.model.GamePlayer;
+import com.codeoftheweb.salvo.model.Salvo;
 import com.codeoftheweb.salvo.model.Ship;
 import com.codeoftheweb.salvo.repository.GamePlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,7 @@ public class GamePlayerController {
 
                 mapResult.put("gamePlayers", gamePlayers); // Creo el campo "gamePlayers", que envuelve lo anterior
                 mapResult.put("ships", gamePlayer.getShips().stream().map(Ship::shipDTO)); // Incorporo los barcos, que surgen del DTO de Ship.java
+                mapResult.put("salvoes", gamePlayer.getGame().getGamePlayers().stream().flatMap(gp -> gp.getSalvo().stream().map(Salvo::salvoDTO)));
                 result.add(mapResult); // Los agrego a la lista resultante
 
         return result;

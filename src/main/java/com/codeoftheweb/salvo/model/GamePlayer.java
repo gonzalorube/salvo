@@ -28,6 +28,9 @@ public class GamePlayer {
     @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Ship> ships = new HashSet<>();
 
+    @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Salvo> salvoes = new HashSet<>();
+
     public GamePlayer(){
     }
 
@@ -36,19 +39,6 @@ public class GamePlayer {
         this.game = game;
         this.player = player;
     }
-
-    /* public GamePlayer(LocalDateTime joinDate, Long gameId, String userName){
-        this.joinDate = joinDate;
-        this.gameId = gameId;
-        this.userName = userName;
-    } */
-
-    /* public GamePlayer(long id, LocalDateTime joinDate, Game game, Player player){
-        this.id = id;
-        this.joinDate = joinDate;
-        this.game = game;
-        this.player = player;
-    }*/
 
     public Long getId(){
         return id;
@@ -101,6 +91,15 @@ public class GamePlayer {
     public void addShip(Ship ship){
         this.ships.add(ship);
         ship.setGamePlayer(this);
+    }
+
+    public Set<Salvo> getSalvo(){
+        return this.salvoes;
+    }
+
+    public void addSalvo(Salvo salvo){
+        this.salvoes.add(salvo);
+        salvo.setGamePlayer(this);
     }
 }
 

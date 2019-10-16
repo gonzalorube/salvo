@@ -1,22 +1,13 @@
 package com.codeoftheweb.salvo;
 
-import com.codeoftheweb.salvo.model.Game;
-import com.codeoftheweb.salvo.model.GamePlayer;
-import com.codeoftheweb.salvo.model.Player;
-import com.codeoftheweb.salvo.model.Ship;
-import com.codeoftheweb.salvo.repository.GamePlayerRepository;
-import com.codeoftheweb.salvo.repository.GameRepository;
-import com.codeoftheweb.salvo.repository.PlayerRepository;
-import com.codeoftheweb.salvo.repository.ShipRepository;
+import com.codeoftheweb.salvo.model.*;
+import com.codeoftheweb.salvo.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
@@ -29,7 +20,7 @@ public class SalvoApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository){
+	public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository, SalvoRepository salvoRepository){
 		return (args) -> {
 			// Instancio la fecha pedida
 			LocalDateTime date = LocalDateTime.of(2018, 2, 17, 15, 20, 15);
@@ -120,6 +111,39 @@ public class SalvoApplication {
 
 			gamePlayer10.addShip(new Ship("Submarine", Arrays.asList("A2", "A3", "A4")));
 			gamePlayer10.addShip(new Ship("Patrol Boat", Arrays.asList("G6", "H6")));
+
+			gamePlayer1.addSalvo(new Salvo("1", Arrays.asList("B5", "C5", "F1")));
+			gamePlayer2.addSalvo(new Salvo("1", Arrays.asList("B4", "B5", "B6")));
+
+			gamePlayer1.addSalvo(new Salvo("2", Arrays.asList("F2", "D5")));
+			gamePlayer2.addSalvo(new Salvo("2", Arrays.asList("E1", "H3", "A2")));
+
+			gamePlayer3.addSalvo(new Salvo("1", Arrays.asList("A2", "A4", "G6")));
+			gamePlayer4.addSalvo(new Salvo("1", Arrays.asList("B5", "D5", "C7")));
+
+			gamePlayer3.addSalvo(new Salvo("2", Arrays.asList("A3", "H6")));
+			gamePlayer4.addSalvo(new Salvo("2", Arrays.asList("C5", "C6")));
+
+			gamePlayer5.addSalvo(new Salvo("1", Arrays.asList("G6", "H6", "H4")));
+			gamePlayer6.addSalvo(new Salvo("1", Arrays.asList("H1", "H2", "H3")));
+
+			gamePlayer5.addSalvo(new Salvo("2", Arrays.asList("A2", "A3", "D8")));
+			gamePlayer6.addSalvo(new Salvo("2", Arrays.asList("E1", "F2", "G3")));
+
+			gamePlayer7.addSalvo(new Salvo("1", Arrays.asList("A3", "A4", "F7")));
+			gamePlayer8.addSalvo(new Salvo("1", Arrays.asList("B5", "C6", "H1")));
+
+			gamePlayer7.addSalvo(new Salvo("2", Arrays.asList("A2", "G6", "H6")));
+			gamePlayer8.addSalvo(new Salvo("2", Arrays.asList("C5", "C7", "D5")));
+
+			gamePlayer9.addSalvo(new Salvo("1", Arrays.asList("A1", "A2", "A3")));
+			gamePlayer10.addSalvo(new Salvo("1", Arrays.asList("B5", "B6", "C7")));
+
+			gamePlayer9.addSalvo(new Salvo("2", Arrays.asList("G6", "G7", "G8")));
+			gamePlayer10.addSalvo(new Salvo("2", Arrays.asList("C6", "D6", "E6")));
+
+			gamePlayer10.addSalvo(new Salvo("3", Arrays.asList("H1", "H8")));
+
 
 			gamePlayerRepository.save(gamePlayer1);
 			gamePlayerRepository.save(gamePlayer2);

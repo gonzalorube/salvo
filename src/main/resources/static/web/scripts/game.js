@@ -35,6 +35,7 @@ ajaxCallURL().done(function(data) {
 
 // Itero los barcos del gamePlayer
     var ships4Player = data[0].ships;
+    var salvoes4Player = data[0].salvoes;
     for(e in ships4Player){
 //        console.log(ships4Player[e].locations);
 // Itero las ubicaciones de cada barco
@@ -44,6 +45,23 @@ ajaxCallURL().done(function(data) {
             console.log(shLoc4Play[i]);
             var cellId = document.getElementById(shLoc4Play[i]);
             cellId.style.backgroundColor = "#660000";
+            for(c in salvoes4Player){
+                    if(gpViewId == salvoes4Player[c].player){
+                        for(d in salvoes4Player[c].locations){
+                            var cellSId = document.getElementById("S" + salvoes4Player[c].locations[d]);
+                            cellSId.innerText = "SHOT";
+                            cellSId.style.color = "#FFF";
+                            cellSId.style.backgroundColor = "#000";
+                        }
+                    } else {
+                        for(m in salvoes4Player[c].locations){
+                            if(salvoes4Player[c].locations[m].indexOf(shLoc4Play[i]) != -1){
+                                cellId.innerText = "HIT";
+                                cellId.style.color = "#FFF";
+                            }
+                        }
+                    }
+                }
         }
     }
     var gpViewId = getParameterByName('gp');
@@ -66,4 +84,5 @@ ajaxCallURL().done(function(data) {
         // versus += " vs ";
     }
     playersTag.innerHTML = versus; // los Strings guardados en versus se convierten en HTML de la etiqueta H3 de game.html
+    getElementByClassName("cell").style.minWidth = "66px";
 });
