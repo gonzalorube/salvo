@@ -20,8 +20,12 @@ public class SalvoApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository, SalvoRepository salvoRepository){
+	public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository, SalvoRepository salvoRepository, ScoreRepository scoreRepository){
 		return (args) -> {
+
+			double win = 1.0;
+			double tie = 0.5;
+			double lost = 0.0;
 			// Instancio la fecha pedida
 			LocalDateTime date = LocalDateTime.of(2018, 2, 17, 15, 20, 15);
 
@@ -156,6 +160,35 @@ public class SalvoApplication {
 			gamePlayerRepository.save(gamePlayer9);
 			gamePlayerRepository.save(gamePlayer10);
 
+			scoreRepository.save(new Score(game1, player1, win, date));
+			scoreRepository.save(new Score(game1, player2, lost, date));
+
+			scoreRepository.save(new Score(game2, player1, tie, date));
+			scoreRepository.save(new Score(game2, player2, tie, date));
+
+			scoreRepository.save(new Score(game3, player2, win, date));
+			scoreRepository.save(new Score(game3, player4, lost, date));
+
+			scoreRepository.save(new Score(game4, player1, tie, date));
+			scoreRepository.save(new Score(game4, player2, tie, date));
+
+		/*	player1.addScore(new Score(game1, win, date));
+			player2.addScore(new Score(game1, lost, date));
+
+			player1.addScore(new Score(game2, tie, date));
+			player2.addScore(new Score(game2, tie, date));
+
+			player2.addScore(new Score(game3, win, date));
+			player4.addScore(new Score(game3, lost, date));
+
+			player2.addScore(new Score(game4, tie, date));
+			player1.addScore(new Score(game4, tie, date));
+
+
+			playerRepository.save(player1);
+			playerRepository.save(player2);
+			playerRepository.save(player3);
+			playerRepository.save(player4);*/
 		};
 	}
 

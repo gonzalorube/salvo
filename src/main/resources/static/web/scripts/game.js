@@ -32,10 +32,9 @@ ajaxCallURL().done(function(data) {
     var gpViewId = getParameterByName('gp'); // Obtengo el parámetro que viaja en la variable gp de mi URL
 //    console.log("listo");
 //    console.log(data[0].ships);
-
+    var salvoes4Player = data[0].salvoes;
 // Itero los barcos del gamePlayer
     var ships4Player = data[0].ships;
-    var salvoes4Player = data[0].salvoes;
     for(e in ships4Player){
 //        console.log(ships4Player[e].locations);
 // Itero las ubicaciones de cada barco
@@ -45,17 +44,20 @@ ajaxCallURL().done(function(data) {
             console.log(shLoc4Play[i]);
             var cellId = document.getElementById(shLoc4Play[i]);
             cellId.style.backgroundColor = "#660000";
+// Itero los salvoes de cada jugador
             for(c in salvoes4Player){
-                    if(gpViewId == salvoes4Player[c].player){
-                        for(d in salvoes4Player[c].locations){
+                    if(gpViewId == salvoes4Player[c].player){  // si el id de la url es igual al id del gamePlayer...
+                        for(d in salvoes4Player[c].locations){ // (itero las ubicaciones de los salvoes)
+                        // ...obtengo las celdas de la segunda tabla, las pinto y les escribo "SHOT"
                             var cellSId = document.getElementById("S" + salvoes4Player[c].locations[d]);
                             cellSId.innerText = "SHOT";
                             cellSId.style.color = "#FFF";
                             cellSId.style.backgroundColor = "#000";
                         }
-                    } else {
-                        for(m in salvoes4Player[c].locations){
-                            if(salvoes4Player[c].locations[m].indexOf(shLoc4Play[i]) != -1){
+                    } else {  // si no es el mismo id (es el del otro gamePlayer)...
+                        for(m in salvoes4Player[c].locations){ // (itero las ubicaciones de los salvoes de ese gamePlayer...
+                            if(salvoes4Player[c].locations[m].indexOf(shLoc4Play[i]) != -1){ // y si esa ubicación aparece entre los barcos del otro gamePlayer...
+                                // escribo en la celda correspondiente una "X" y el número de turno en que sucedió
                                 cellId.innerText = "X" + "-T" + salvoes4Player[c].turn;
                                 cellId.style.color = "#FFF";
                             }
