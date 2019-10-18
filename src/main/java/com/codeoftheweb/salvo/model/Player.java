@@ -74,6 +74,10 @@ public class Player {
         gamePlayers.add(gamePlayer);
     }
 
+    public Score getScore(Game game){
+        return this.gamePlayers
+    }
+
     public void addScore(Score score){
         this.scores.add(score);
         score.setPlayer(this);

@@ -31,6 +31,8 @@ public class GamePlayer {
     @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Salvo> salvoes = new HashSet<>();
 
+    private double score;
+
     public GamePlayer(){
     }
 
@@ -100,6 +102,10 @@ public class GamePlayer {
     public void addSalvo(Salvo salvo){
         this.salvoes.add(salvo);
         salvo.setGamePlayer(this);
+    }
+
+    public Score getScore(){
+        return this.score;
     }
 }
 
