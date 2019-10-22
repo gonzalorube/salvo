@@ -43,7 +43,7 @@ public class GameController {
                     gamePlayerDTO.put("id", gamePlayer.getId()); // Rescato id de jugador en juego y lo llevo a su campo
                     playerDTO.put("id", gamePlayer.getPlayer().getId()); // Traigo id de jugador
                     playerDTO.put("email", gamePlayer.getPlayer().getUserName()); // Traigo email de jugador
-                    playerDTO.put("scores", gamePlayer.getScore().getScore());
+                    playerDTO.put("scores", gamePlayer.getScore().getPoints());
                     gamePlayerDTO.put("player", playerDTO); // Creo el campo "player", donde vuelco el id y el email y lo hago depender del id de jugador en juego
 
                     gamePlayers.add(gamePlayerDTO); // Incorporo este tramo al general

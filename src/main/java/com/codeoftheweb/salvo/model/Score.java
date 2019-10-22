@@ -22,14 +22,14 @@ public class Score {
     private double tie = 0.5;
     private double lost = 0.0;
 
-    private double score;
+    private double points;
 
     private LocalDateTime finishDate;
 
     public Score(){}
 
-    public Score(Game game, Player player, double score, LocalDateTime finishDate){
-        this.score = score;
+    public Score(Game game, Player player, double points, LocalDateTime finishDate){
+        this.points = points;
         this.finishDate = finishDate;
     }
 
@@ -57,12 +57,12 @@ public class Score {
         this.player = player;
     }
 
-    public double getScore() {
-        return score;
+    public double getPoints() {
+        return points;
     }
 
-    public void setScore(double score) {
-        this.score = score;
+    public void setScore(double points) {
+        this.points = points;
     }
 
     public LocalDateTime getFinishDate() {
