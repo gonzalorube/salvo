@@ -160,17 +160,30 @@ public class SalvoApplication {
 			gamePlayerRepository.save(gamePlayer9);
 			gamePlayerRepository.save(gamePlayer10);
 
-			scoreRepository.save(new Score(game1, player1, win, date));
-			scoreRepository.save(new Score(game1, player2, lost, date));
+			Score scoreG1P1 = new Score(game1, player1, win, date);
+			Score scoreG1P2 = new Score(game1, player2, lost, date);
+			Score scoreG2P1 = new Score(game2, player1, tie, date);
+			Score scoreG2P2 = new Score(game2, player2, tie, date);
+			Score scoreG3P2 = new Score(game3, player2, win, date);
+			Score scoreG3P4 = new Score(game3, player4, lost, date);
+			Score scoreG4P1 = new Score(game4, player1, tie, date);
+			Score scoreG4P2 = new Score(game4, player2, tie, date);
 
-			scoreRepository.save(new Score(game2, player1, tie, date));
-			scoreRepository.save(new Score(game2, player2, tie, date));
+			player1.addScore(scoreG1P1);
+			player1.addScore(scoreG2P1);
+			player1.addScore(scoreG4P1);
+			player2.addScore(scoreG1P2);
+			player2.addScore(scoreG2P2);
+			player2.addScore(scoreG3P2);
+			player2.addScore(scoreG4P2);
+			player4.addScore(scoreG3P4);
 
-			scoreRepository.save(new Score(game3, player2, win, date));
-			scoreRepository.save(new Score(game3, player4, lost, date));
-
-			scoreRepository.save(new Score(game4, player1, tie, date));
-			scoreRepository.save(new Score(game4, player2, tie, date));
+			// Guardo los jugadores
+			player1 = playerRepository.save(player1);
+			player2 = playerRepository.save(player2);
+			player3 = playerRepository.save(player3);
+			player4 = playerRepository.save(player4);
+			player5 = playerRepository.save(player5);
 
 		/*	player1.addScore(new Score(game1, win, date));
 			player2.addScore(new Score(game1, lost, date));
