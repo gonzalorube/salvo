@@ -18,9 +18,9 @@ public class Score {
     @ManyToOne
     private Player player;
 
-    private double win = 1.0;
+    /*private double win = 1.0;
     private double tie = 0.5;
-    private double lost = 0.0;
+    private double lost = 0.0;*/
 
     private double points;
 
@@ -29,6 +29,8 @@ public class Score {
     public Score(){}
 
     public Score(Game game, Player player, double points, LocalDateTime finishDate){
+        this.game = game;
+        this.player = player;
         this.points = points;
         this.finishDate = finishDate;
     }

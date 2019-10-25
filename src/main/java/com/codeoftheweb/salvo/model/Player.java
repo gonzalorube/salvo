@@ -3,10 +3,7 @@ package com.codeoftheweb.salvo.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -28,9 +25,10 @@ public class Player {
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     Set<Score> scores = new HashSet<>();
 
-    public Player() {}
+    public Player() {
+    }
 
-    public Player(String first, String last, String user){
+    public Player(String first, String last, String user) {
         this.firstName = first;
         this.lastName = last;
         this.userName = user;
@@ -60,11 +58,11 @@ public class Player {
         this.lastName = lastName;
     }
 
-    public String getUserName(){
+    public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName){
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
@@ -72,12 +70,12 @@ public class Player {
         return firstName + " " + lastName + " " + userName;
     }
 
-    public void addGamePlayer(GamePlayer gamePlayer){
+    public void addGamePlayer(GamePlayer gamePlayer) {
         gamePlayer.setPlayer(this);
         gamePlayers.add(gamePlayer);
     }
 
-    public Score getScore(Game game){
+    public Score getScore(Game game) {
         return this.scores.stream().filter(sc -> sc.getGame().getId() == game.getId()).findFirst().orElse(null);
     }
 

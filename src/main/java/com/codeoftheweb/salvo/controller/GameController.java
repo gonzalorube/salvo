@@ -14,7 +14,7 @@ public class GameController {
     @Autowired
     private GameRepository gameRepo; // Repositorio de games
 
-    @RequestMapping("/api/games") // Queremos que ésta sea la ruta
+    @RequestMapping("api/games") // Queremos que ésta sea la ruta
 
     // Método para iterar sobre los juegos creados y generar el JSON con los campos y valores adecuados
     private List<Map<String, Object>> getGames() {
@@ -43,7 +43,9 @@ public class GameController {
                     gamePlayerDTO.put("id", gamePlayer.getId()); // Rescato id de jugador en juego y lo llevo a su campo
                     playerDTO.put("id", gamePlayer.getPlayer().getId()); // Traigo id de jugador
                     playerDTO.put("email", gamePlayer.getPlayer().getUserName()); // Traigo email de jugador
-                    playerDTO.put("scores", gamePlayer.getScore().getPoints());
+                    if(gamePlayer.getScore() != null ) {
+                        playerDTO.put("scores", gamePlayer.getScore().getPoints());
+                    }
                     gamePlayerDTO.put("player", playerDTO); // Creo el campo "player", donde vuelco el id y el email y lo hago depender del id de jugador en juego
 
                     gamePlayers.add(gamePlayerDTO); // Incorporo este tramo al general
