@@ -1,6 +1,3 @@
-
-    // Obtengo la lista ordenada de id="lista"
-    // var games = document.getElementById("lista");
     // Solicito el JSON y, cuando es un éxito, lo itero y voy creando los elementos de lista
     var gamesJson = $.getJSON("/api/games").done(function recurse(data) {
         var table;
@@ -88,7 +85,8 @@
                   }
                   return lost;
               }
-
+              // Obtengo la lista ordenada de id="lista"
+              // var games = document.getElementById("lista");
               /*var lista ="";
                       for(let i=0; i<data.length; i++){
                           lista += "<li>" + "<ul>" + "<li>" + "Game Id: " + data[i].id + "</li>" + "<li>" + "Created: " + data[i].created + "</li>" + "<li>" + "GamePlayers: " + "<ol>";
@@ -108,7 +106,6 @@
         console.log( "Salió todo mal, ¡RAJEMOS!" );
       })
       .always(function() { /* Para lanzar por consola cuando se completa, pase lo que pase */
-        console.log( "FUCK YEAH!");
         console.log( "Completed." );
         console.log( "I deserve a 'mate amargo'" );
       });
