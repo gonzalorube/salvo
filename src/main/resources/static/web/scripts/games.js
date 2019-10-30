@@ -4,17 +4,24 @@
     // Solicito el JSON y, cuando es un éxito, lo itero y voy creando los elementos de lista
     var gamesJson = $.getJSON("/api/games").done(function recurse(data) {
         console.log("Eh, eh");
-        var uName;
         var table;
-        table = "<table><tr><th>Name</th><th>Total</th><th>Win</th><th>Tie</th><th>Lost</th></tr>";
+        table = "<div class='container'><table class='table table-bordered table-responsive'><tr><th>Name</th><th>Total</th><th>Win</th><th>Tie</th><th>Lost</th></tr>";
+        var uName = [""];
+        var pPoints = [];
+        var pTotal = 0.0;
         for(let k=0; k<data.length; k++){
-            console.log("pip");
-            for(let j; j<data[k].gamePlayers.length; j++){
-                console.log("pepe");
+            for(let h=0; h<data[k].gamePlayers.length; h++){
+                if(uName.indexOf(data[k].gamePlayers[h].player.email) == -1){
+                    uName.push(data[k].gamePlayers[h].player.email);
+                    pPoints.push(data[k].gamePlayers[h].player.scores);
+                    pTotal += parseFloat(data[k].gamePlayers[h].player.scores);
+                    table += "<tr><td>" + data[k].gamePlayers[h].player.email + "</td><td></td><td></td><td></td><td></td></tr>";
+                } else { console.log("No encontrado"); }
             }
         }
+        table += "</table></div>"
         console.log("HEY");
-        var leaderboard = document.getElementById("leaderboard").innerHTML = table;
+        var lBoard = document.getElementById("leaderboard").innerHTML = table;
         console.log( "Success" );
         /*var lista ="";
         for(let i=0; i<data.length; i++){
