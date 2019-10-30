@@ -5,21 +5,16 @@
     var gamesJson = $.getJSON("/api/games").done(function recurse(data) {
         console.log("Eh, eh");
         var table;
-        table = "<div class='container'><table class='table table-bordered table-responsive'><tr><th>Name</th><th>Total</th><th>Win</th><th>Tie</th><th>Lost</th></tr>";
-        var uName = [""];
-        var pPoints = [];
-        var pTotal = 0.0;
-        for(let k=0; k<data.length; k++){
-            for(let h=0; h<data[k].gamePlayers.length; h++){
-                if(uName.indexOf(data[k].gamePlayers[h].player.email) == -1){
-                    uName.push(data[k].gamePlayers[h].player.email);
-                    pPoints.push(data[k].gamePlayers[h].player.scores);
-                    pTotal += parseFloat(data[k].gamePlayers[h].player.scores);
-                    table += "<tr><td>" + data[k].gamePlayers[h].player.email + "</td><td></td><td></td><td></td><td></td></tr>";
-                } else { console.log("No encontrado"); }
+        table = "<tr><th>Name</th><th>Total</th><th>Win</th><th>Tie</th><th>Lost</th></tr>";
+        var uName = [];
+        for(let k=0; k<data.length; k++){  // Itero el JSON de api/games
+            for(let h=0; h<data[k].gamePlayers.length; h++){  // Itero cada gamePlayer
+                if(uName.indexOf(data[k].gamePlayers[h].player.email) == -1){ // Si el email no está en la lista
+                    uName.push(data[k].gamePlayers[h].player.email);  // lo agrego
+                    table += "<tr><td>" + data[k].gamePlayers[h].player.email + "</td><td>" + getPointsPerPlayer(data[k].gamePlayers[h].player.email) + "</td><td>" + getWins(data[k].gamePlayers[h].player.email) + "</td><td>" + getTieds(data[k].gamePlayers[h].player.email) + "</td><td>" + getDefeats(data[k].gamePlayers[h].player.email) + "</td></tr>";
+                } else { console.log("Already Exists"); }
             }
         }
-        table += "</table></div>"
         console.log("HEY");
         var lBoard = document.getElementById("leaderboard").innerHTML = table;
         console.log( "Success" );
@@ -36,6 +31,87 @@
         // Envío la cadena guardada en "lista" al HTML de la lista ordenada accedida al principio
         games.innerHTML += lista;
         console.log("I can't stop succeeding...");*/
+
+        function getPointsPerPlayer(player2Compare){
+                  var pTotal = 0.0;
+                  for(let k=0; k<data.length; k++){  // Itero el JSON de api7/games
+                      console.log("llegué!");
+                      for(let h=0; h<data[k].gamePlayers.length; h++){  // Itero cada gamePlayer
+                          console.log("cada vez más cerca!");
+                          var player = data[k].gamePlayers[h].player.email;
+                          console.log(player);
+                          console.log(player2Compare + " por parámetro");
+                          if(player === player2Compare){
+                              console.log("la pucha!");
+                              if(data[k].gamePlayers[h].player.scores != null){
+                                  pTotal += parseFloat(data[k].gamePlayers[h].player.scores);
+                                  console.log(pTotal);
+                              }
+                          }
+                      }
+                  }
+                  return pTotal;
+              }
+
+              function getWins(player2Compare){
+                  var win = 0;
+                  for(let k=0; k<data.length; k++){  // Itero el JSON de api7/games
+                      console.log("llegué!");
+                      for(let h=0; h<data[k].gamePlayers.length; h++){  // Itero cada gamePlayer
+                          console.log("cada vez más cerca!");
+                          var player = data[k].gamePlayers[h].player.email;
+                          console.log(player);
+                          console.log(player2Compare + " por parámetro");
+                          var points = data[k].gamePlayers[h].player.scores;
+                          if(player === player2Compare && points != null && points == "1.0"){
+                              win++;
+                              console.log(win);
+                          }
+                      }
+                  }
+                  return win;
+              }
+
+              function getTieds(player2Compare){
+                  var tied = 0;
+                  for(let k=0; k<data.length; k++){  // Itero el JSON de api7/games
+                      console.log("llegué!");
+                      for(let h=0; h<data[k].gamePlayers.length; h++){  // Itero cada gamePlayer
+                          console.log("cada vez más cerca!");
+                           var player = data[k].gamePlayers[h].player.email;
+                           console.log(player);
+                           console.log(player2Compare + " por parámetro");
+                           var points = data[k].gamePlayers[h].player.scores;
+                           if(player === player2Compare && points != null && points == "0.5"){
+                               tied++;
+                               console.log(tied);
+                           }
+                      }
+                  }
+                  return tied;
+               }
+
+
+              function getDefeats
+              (player2Compare){
+                  var lost = 0;
+                  for(let k=0; k<data.length; k++){  // Itero el JSON de api7/games
+                      console.log("llegué!");
+                      for(let h=0; h<data[k].gamePlayers.length; h++){  // Itero cada gamePlayer
+                          console.log("cada vez más cerca!");
+                          var player = data[k].gamePlayers[h].player.email;
+                          console.log(player);
+                          console.log(player2Compare + " por parámetro");
+                          var points = data[k].gamePlayers[h].player.scores;
+                          if(player === player2Compare && points != null && points == "0.0"){
+                              lost++;
+                              console.log(lost
+                              );
+                          }
+                      }
+                  }
+                  return lost;
+              }
       })
       .fail(function() { /* Por si falla... */
         console.log( "Salió todo mal, ¡RAJEMOS!" );
