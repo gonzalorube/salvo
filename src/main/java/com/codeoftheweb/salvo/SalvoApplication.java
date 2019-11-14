@@ -6,6 +6,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.configuration.GlobalAuthenticationConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -205,4 +211,21 @@ public class SalvoApplication {
 		};
 	}
 
+}
+
+@Configuration
+class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter{
+
+	public UserDetailsService loadUserByUserName(String name){
+		UserDetails user =
+				User.withDefaultPasswordEncoder()
+						.username("user")
+						.password("password")
+						.roles("USER")
+						.build();
+
+		return new InMemoryUserDetailsManager(user);
+
+
+	}
 }
