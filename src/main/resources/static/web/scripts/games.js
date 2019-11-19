@@ -20,12 +20,12 @@
                   for(let k=0; k<data.length; k++){  // Itero el JSON de api/games
                       for(let h=0; h<data[k].gamePlayers.length; h++){  // Itero cada gamePlayer
                           var player = data[k].gamePlayers[h].player.email;
-                          console.log(player);
-                          console.log(player2Compare + " por parámetro");
+                          // console.log(player);
+                          // console.log(player2Compare + " por parámetro");
                           if(player === player2Compare){
                               if(data[k].gamePlayers[h].player.scores != null){
                                   pTotal += parseFloat(data[k].gamePlayers[h].player.scores);
-                                  console.log(pTotal);
+                                  // console.log(pTotal);
                               }
                           }
                       }
@@ -38,12 +38,12 @@
                   for(let k=0; k<data.length; k++){  // Itero el JSON de api7/games
                       for(let h=0; h<data[k].gamePlayers.length; h++){  // Itero cada gamePlayer
                           var player = data[k].gamePlayers[h].player.email;
-                          console.log(player);
-                          console.log(player2Compare + " por parámetro");
+                          // console.log(player);
+                          // console.log(player2Compare + " por parámetro");
                           var points = data[k].gamePlayers[h].player.scores;
                           if(player === player2Compare && points != null && points == "1.0"){ // Mismo jugador? Puntos igual a 1? Sumale 1 al win
                               win++;
-                              console.log(win);
+                              // console.log(win);
                           }
                       }
                   }
@@ -55,12 +55,12 @@
                   for(let k=0; k<data.length; k++){  // Itero el JSON de api7/games
                       for(let h=0; h<data[k].gamePlayers.length; h++){  // Itero cada gamePlayer
                            var player = data[k].gamePlayers[h].player.email;
-                           console.log(player);
-                           console.log(player2Compare + " por parámetro");
+                           // console.log(player);
+                           // console.log(player2Compare + " por parámetro");
                            var points = data[k].gamePlayers[h].player.scores;
                            if(player === player2Compare && points != null && points == "0.5"){
                                tied++;
-                               console.log(tied);
+                               // console.log(tied);
                            }
                       }
                   }
@@ -74,12 +74,12 @@
                   for(let k=0; k<data.length; k++){  // Itero el JSON de api7/games
                       for(let h=0; h<data[k].gamePlayers.length; h++){  // Itero cada gamePlayer
                           var player = data[k].gamePlayers[h].player.email;
-                          console.log(player);
-                          console.log(player2Compare + " por parámetro");
+                          // console.log(player);
+                          // console.log(player2Compare + " por parámetro");
                           var points = data[k].gamePlayers[h].player.scores;
                           if(player === player2Compare && points != null && points == "0.0"){
                               lost++;
-                              console.log(lost);
+                              // console.log(lost);
                           }
                       }
                   }
@@ -103,9 +103,9 @@
 
       })
       .fail(function() { /* Por si falla... */
-        console.log( "Salió todo mal, ¡RAJEMOS!" );
+       console.log( "Salió todo mal, ¡RAJEMOS!" );
       })
       .always(function() { /* Para lanzar por consola cuando se completa, pase lo que pase */
-        console.log( "Completed." );
-        console.log( "I deserve a 'mate amargo'" );
+       console.log( "Completed." );
+        // console.log( "I deserve a 'mate amargo'" );
       });

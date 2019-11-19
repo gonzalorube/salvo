@@ -2,17 +2,19 @@ package com.codeoftheweb.salvo;
 
 import com.codeoftheweb.salvo.model.*;
 import com.codeoftheweb.salvo.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.GlobalAuthenticationConfigurerAdapter;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -24,6 +26,9 @@ public class SalvoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SalvoApplication.class, args);
 	}
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	@Bean
 	public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository, GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository, SalvoRepository salvoRepository, ScoreRepository scoreRepository){
@@ -44,11 +49,11 @@ public class SalvoApplication {
 			Game game6 = new Game(date.plus(5, ChronoUnit.HOURS));
 
 			// Instancio los 5 jugadores
-			Player player1 = new Player("Jack", "Bauer", "j.bauer@ctu.gov", "24");
-			Player player2 = new Player("Chloe", "O'Brian", "c.obrian@ctu.gov", "42");
-			Player player3 = new Player("Kim", "Bauer", "kim_bauer@gmail.com", "kb");
-			Player player4 = new Player("Tony", "Almeida", "t.almeida@ctu.gov", "mole");
-			Player player5 = new Player("d", "Palmer", "d.palmer@whitehouse.gov", "nada");
+			Player player1 = new Player("Jack", "Bauer", "j.bauer@ctu.gov", passwordEncoder.encode("24"));
+			Player player2 = new Player("Chloe", "O'Brian", "c.obrian@ctu.gov", passwordEncoder.encode("42"));
+			Player player3 = new Player("Kim", "Bauer", "kim_bauer@gmail.com", passwordEncoder.encode("kb"));
+			Player player4 = new Player("Tony", "Almeida", "t.almeida@ctu.gov", passwordEncoder.encode("mole"));
+			Player player5 = new Player("d", "Palmer", "d.palmer@whitehouse.gov", passwordEncoder.encode("nada"));
 
 			// Guardo los jugadores
 			player1 = playerRepository.save(player1);
@@ -216,16 +221,27 @@ public class SalvoApplication {
 @Configuration
 class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter{
 
-	public UserDetailsService loadUserByUserName(String name){
-		UserDetails user =
-				User.withDefaultPasswordEncoder()
-						.username("user")
-						.password("password")
-						.roles("USER")
-						.build();
+	@Autowired
+	PlayerRepository playerRepository;
 
-		return new InMemoryUserDetailsManager(user);
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 
+	@Override
+	public void init(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(inputName-> {
+			Player player = playerRepository.findByUserName(inputName);
+			// System.out.println(player);
+			if (player != null) {
+				return new User(player.getUserName(), player.getPassword(),
+						AuthorityUtils.createAuthorityList("USER"));
+			} else {
+				throw new UsernameNotFoundException("Unknown user: " + inputName);
+			}
+		}).passwordEncoder(passwordEncoder());
 	}
 }
+

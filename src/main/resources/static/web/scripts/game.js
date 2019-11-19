@@ -41,7 +41,7 @@ ajaxCallURL().done(function(data) {
         var shLoc4Play = ships4Player[e].locations;
 // Por cada String de ubicación del barco, busco la celda en la grilla y la pinto de un color
         for(i in shLoc4Play){
-            console.log(shLoc4Play[i]);
+//            console.log(shLoc4Play[i]);
             var cellId = document.getElementById(shLoc4Play[i]);
             cellId.style.backgroundColor = "#660000";
 // Itero los salvoes de cada jugador

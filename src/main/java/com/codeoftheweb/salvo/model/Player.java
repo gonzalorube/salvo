@@ -33,6 +33,7 @@ public class Player {
         this.firstName = first;
         this.lastName = last;
         this.userName = user;
+        this.password = password;
     }
 
     public Long getId() {

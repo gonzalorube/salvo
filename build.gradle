@@ -21,6 +21,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	runtimeOnly 'com.h2database:h2'
+	runtime('javax.xml.bind:jaxb-api')
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compile("org.springframework.boot:spring-boot-starter-security")
 }
