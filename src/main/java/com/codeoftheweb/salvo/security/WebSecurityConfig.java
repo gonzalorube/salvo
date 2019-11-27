@@ -15,8 +15,10 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/rest/**").denyAll()
-				.antMatchers("/api/game_view/**").hasAnyAuthority("USER");
+				//.antMatchers("/rest/**").denyAll()
+				.antMatchers("/api/game_view/**").hasAnyAuthority("USER")
+				.antMatchers("/api/games").permitAll()
+				.antMatchers("/web/**").permitAll();
 
 		http.formLogin()
 				.usernameParameter("username")
@@ -25,7 +27,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.logout().logoutUrl("/api/logout");
 
-		// deshabilito los tokens de referencia cruzada
+		// deshabilito los tokens
 		http.csrf().disable();
 
 		http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));

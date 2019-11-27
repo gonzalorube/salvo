@@ -23,8 +23,8 @@ public class PlayerController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @RequestMapping(path = "/players", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, Object>> createUser(@RequestParam String username, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String password) {
+    @RequestMapping(path = "/api/players", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> createUser(@RequestParam String username, @RequestParam String password) {
         ResponseEntity<Map<String, Object>> response;
         Player player = playerRepository.findByUserName(username);
         if (username.isEmpty() || password.isEmpty()) {
@@ -32,7 +32,7 @@ public class PlayerController {
         } else if (player != null) {
             response = new ResponseEntity<>(userRespMap("error", "Username already exists"), HttpStatus.FORBIDDEN);
         } else {
-            Player newPlayer = playerRepository.save(new Player(username, firstName, lastName, password));
+            Player newPlayer = playerRepository.save(new Player(username, password));
             response = new ResponseEntity<>(userRespMap("id", newPlayer.getId()), HttpStatus.CREATED);
         }
         return response;

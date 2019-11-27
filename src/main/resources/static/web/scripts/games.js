@@ -109,3 +109,24 @@
        console.log( "Completed." );
         // console.log( "I deserve a 'mate amargo'" );
       });
+
+      function login(evt) {
+        evt.preventDefault();
+        var form = evt.target.form;
+        $.post("/api/login",
+               { username: form["username"].value,
+                 password: form["password"].value })
+         .done( function() {
+
+            //var addUserEtc = getElementById("userEtc").innerText = "ok ok";
+             })
+         .fail( function() { console.log("Keep calm & quit"); });
+      }
+
+      function logout(evt) {
+        evt.preventDefault();
+        $.post("/api/logout")
+         .done( function() { // var changeBtn = getElementById("logBtn").innerText = "Sign Up";
+         })
+         .fail( function() { console.log("Keep calm, run away & quit  now")});
+      }
