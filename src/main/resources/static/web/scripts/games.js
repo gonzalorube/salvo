@@ -117,6 +117,7 @@
                { username: form["username"].value,
                  password: form["password"].value })
          .done( function() {
+            console.log("Éxito");
 
             //var addUserEtc = getElementById("userEtc").innerText = "ok ok";
              })
@@ -126,7 +127,9 @@
       function logout(evt) {
         evt.preventDefault();
         $.post("/api/logout")
-         .done( function() { // var changeBtn = getElementById("logBtn").innerText = "Sign Up";
+         .done( function() {
+            console.log("logged out");
+         // var changeBtn = getElementById("logBtn").innerText = "Sign Up";
          })
-         .fail( function() { console.log("Keep calm, run away & quit  now")});
+         .fail( function() { console.log("Keep calm, run away & quit now")});
       }
