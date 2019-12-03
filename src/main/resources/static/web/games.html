@@ -8,17 +8,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
+
     <h4 id="userEtc"></h4>
 
-    <form id="login-form" onsubmit=login(evt)>
+    <form id="login-form" onsubmit="return false">
         <label>Name: <input type="text" name="username"></label>
         <label>Password: <input type="text" name="password"></label>
+        <button type="submit" id="submit" value="Submit">Submit</button>
     </form>
 
-    <button type="submit" form="login-form" value="Submit">Submit</button>
-
-    <form id="logout-form" onsubmit=logout(evt)>
-        <button id="logBtn">Log out</button>
+    <form id="logout-form" onsubmit="return false">
+        <button id="logout">Log out</button>
     </form>
 
     <h2>Not Cool <small><em>(but effective)</em></small> Leaderboard</h2>
@@ -27,5 +27,6 @@
     <!--  <ol id="lista"></ol> -->
 
     <script src="scripts/games.js"></script>
+
 </body>
 </html>

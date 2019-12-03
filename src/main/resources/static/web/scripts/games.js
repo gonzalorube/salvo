@@ -110,18 +110,37 @@
         // console.log( "I deserve a 'mate amargo'" );
       });
 
-      function login(evt) {
-        evt.preventDefault();
-        var form = evt.target.form;
-        $.post("/api/login",
-               { username: form["username"].value,
-                 password: form["password"].value })
-         .done( function() {
-            console.log("Éxito");
+        $("#submit").click(function(){
+            var form = document.getElementById("login-form");
+            $.post("/api/login",
+            {
+                username: form.elements.namedItem("username").value,
+                password: form.elements.namedItem("password").value
+            }).done( function() {
+                console.log("logged in");
+                //location.reload();
+                var addUserName = document.getElementById("userEtc").innerText = form.elements.namedItem("username").value;
+            });
+        });
 
-            //var addUserEtc = getElementById("userEtc").innerText = "ok ok";
-             })
-         .fail( function() { console.log("Keep calm & quit"); });
+        $("#logout").click(function(){
+            var form = document.getElementById("login-form");
+            $.post("/api/logout")
+            .done( function() {
+                console.log("logged out");
+            });
+        });
+ /*     function login() {
+        var form = document.getElementById("login-form");
+        $.post("/api/login", {
+                username: form.elements.namedItem("username").value,
+                password: form.elements.namedItem("password").value
+            }).done( function() {
+                var addUserEtc = document.getElementById("userEtc").innerText = "ok ok";
+                console.log("logged in!");
+                location.reload();
+                console.log("logged in!");
+            }).fail( function() { console.log("Keep calm & quit"); });
       }
 
       function logout(evt) {
@@ -129,7 +148,8 @@
         $.post("/api/logout")
          .done( function() {
             console.log("logged out");
-         // var changeBtn = getElementById("logBtn").innerText = "Sign Up";
+          var changeBtn = document.getElementById("logBtn").innerText = "Sign Up";
          })
          .fail( function() { console.log("Keep calm, run away & quit now")});
       }
+*/
