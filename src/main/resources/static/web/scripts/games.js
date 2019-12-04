@@ -110,6 +110,8 @@
         // console.log( "I deserve a 'mate amargo'" );
       });
 
+      var isLoggedIn = false;
+
         $("#submit").click(function(){
             var form = document.getElementById("login-form");
             $.post("/api/login",
@@ -118,9 +120,16 @@
                 password: form.elements.namedItem("password").value
             }).done( function() {
                 console.log("logged in");
-                //location.reload();
-                var addUserName = document.getElementById("userEtc").innerText = form.elements.namedItem("username").value;
+                localStorage.setItem("emailForm", form.elements.namedItem("username").value);
+                form.elements.namedItem("username").value = "";
+                form.elements.namedItem("password").value = "";
+                location.reload();
             });
+        });
+
+        $(document).ready(function(){
+            var emailForm = localStorage.getItem("emailForm");
+            document.getElementById("userEtc").innerText = emailForm;
         });
 
         $("#logout").click(function(){
@@ -128,8 +137,11 @@
             $.post("/api/logout")
             .done( function() {
                 console.log("logged out");
+                localStorage.clear();
+                location.reload();
             });
         });
+
  /*     function login() {
         var form = document.getElementById("login-form");
         $.post("/api/login", {
