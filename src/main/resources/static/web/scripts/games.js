@@ -110,58 +110,73 @@
         // console.log( "I deserve a 'mate amargo'" );
       });
 
-      var isLoggedIn = false;
+      //var isLoggedIn = false;
+      //console.log(isLoggedIn);
+      var form = document.getElementById("login-form");
+
+      //$("#userEtc").toggle(isLoggedIn);
+      //$("#logout").toggle(isLoggedIn);
+      //$("#submit").toggle(!isLoggedIn);
+      //$("#signUp").toggle(!isLoggedIn);
 
         $("#submit").click(function(){
-            var form = document.getElementById("login-form");
             $.post("/api/login",
             {
                 username: form.elements.namedItem("username").value,
                 password: form.elements.namedItem("password").value
             }).done( function() {
                 console.log("logged in");
+                //isLoggedIn = true;
+                //console.log(isLoggedIn);
                 localStorage.setItem("emailForm", form.elements.namedItem("username").value);
                 form.elements.namedItem("username").value = "";
                 form.elements.namedItem("password").value = "";
                 location.reload();
+                //console.log(isLoggedIn);
             });
         });
 
         $(document).ready(function(){
             var emailForm = localStorage.getItem("emailForm");
+            //if(isLoggedIn)
             document.getElementById("userEtc").innerText = emailForm;
         });
 
         $("#logout").click(function(){
-            var form = document.getElementById("login-form");
             $.post("/api/logout")
             .done( function() {
                 console.log("logged out");
+                //isLoggedIn = false;
+                //console.log(isLoggedIn);
                 localStorage.clear();
                 location.reload();
+                //console.log(isLoggedIn);
             });
         });
 
- /*     function login() {
-        var form = document.getElementById("login-form");
-        $.post("/api/login", {
-                username: form.elements.namedItem("username").value,
-                password: form.elements.namedItem("password").value
-            }).done( function() {
-                var addUserEtc = document.getElementById("userEtc").innerText = "ok ok";
-                console.log("logged in!");
-                location.reload();
-                console.log("logged in!");
-            }).fail( function() { console.log("Keep calm & quit"); });
-      }
-
-      function logout(evt) {
-        evt.preventDefault();
-        $.post("/api/logout")
-         .done( function() {
-            console.log("logged out");
-          var changeBtn = document.getElementById("logBtn").innerText = "Sign Up";
-         })
-         .fail( function() { console.log("Keep calm, run away & quit now")});
-      }
-*/
+        $("#signUp").click(function(){
+                    $.post("/api/players",
+                    {
+                        username: form.elements.namedItem("username").value,
+                        password: form.elements.namedItem("password").value
+                    }).done( function() {
+                        console.log("New User signed up");
+                        localStorage.setItem("emailForm", form.elements.namedItem("username").value);
+                        $.post("/api/login",
+                        {
+                            username: form.elements.namedItem("username").value,
+                            password: form.elements.namedItem("password").value
+                        }).done( function() {
+                            console.log("New User logged in");
+                            //isLoggedIn = true;
+                            //console.log(isLoggedIn);
+                        });
+                        form.elements.namedItem("username").value = "";
+                        form.elements.namedItem("password").value = "";
+                        location.reload();
+                        //console.log(isLoggedIn);
+                    }).fail( function() {
+                        alert("User already exists");
+                        //console.log(isLoggedIn);
+                    });
+                });

@@ -23,7 +23,7 @@ public class GameController {
         List<Game> gamesList = gameRepo.findAll(); // Obtengo todos los juegos existentes y los envío a una lista
         List<Map<String, Object>> result = new ArrayList<>(); // Creo una lista de Maps para retornar el resultado
 
-        if(authentication != null) {
+//        if(authentication != null) {
             // Itero la lista de juegos
             for (Game game : gamesList) {
 
@@ -32,9 +32,11 @@ public class GameController {
                     Map<String, Object> mapResult = new LinkedHashMap<>();
                     Map<String, Object> playerLoggedInDTO = new LinkedHashMap<>();
                     for (GamePlayer gamePlayer : game.getGamePlayers()) {
-                        if (authentication.getName().equals(gamePlayer.getPlayer().getUserName())) {
-                            playerLoggedInDTO.put("id", gamePlayer.getPlayer().getId());
-                            playerLoggedInDTO.put("name", gamePlayer.getPlayer().getUserName());
+                        if(authentication != null) {
+                            if (authentication.getName().equals(gamePlayer.getPlayer().getUserName())) {
+                                playerLoggedInDTO.put("id", gamePlayer.getPlayer().getId());
+                                playerLoggedInDTO.put("name", gamePlayer.getPlayer().getUserName());
+                            }
                         }
                     }
                     metaMapResult.put("player", playerLoggedInDTO);
@@ -67,7 +69,7 @@ public class GameController {
                     result.add(metaMapResult); // Lo agrego a la lista resultante
                 }
             }
-        } else {
+ /*       } else {
             for (Game game : gamesList) {
 
                 if (game != null) {
@@ -102,7 +104,7 @@ public class GameController {
                     result.add(mapResult); // Lo agrego a la lista resultante
                 }
             }
-        }
+        }*/
         return result;
     }
 }
