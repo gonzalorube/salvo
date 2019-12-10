@@ -28,18 +28,20 @@ public class GameController {
             for (Game game : gamesList) {
 
                 if (game != null) {
-                    Map<String, Object> metaMapResult = new LinkedHashMap<>();
                     Map<String, Object> mapResult = new LinkedHashMap<>();
                     Map<String, Object> playerLoggedInDTO = new LinkedHashMap<>();
-                    for (GamePlayer gamePlayer : game.getGamePlayers()) {
-                        if(authentication != null) {
+                    Map<String, Object> metaMapResult = new LinkedHashMap<>();
+                    if(authentication != null) {
+                        for (GamePlayer gamePlayer : game.getGamePlayers()) {
+
                             if (authentication.getName().equals(gamePlayer.getPlayer().getUserName())) {
                                 playerLoggedInDTO.put("id", gamePlayer.getPlayer().getId());
                                 playerLoggedInDTO.put("name", gamePlayer.getPlayer().getUserName());
+                                metaMapResult.put("player", playerLoggedInDTO);
                             }
                         }
                     }
-                    metaMapResult.put("player", playerLoggedInDTO);
+
                     mapResult.put("id", game.getId()); // Por cada campo, busco id y fecha de creación
                     mapResult.put("created", game.getCreationDate()); // y los pongo en sus correspondientes campos
                     List<Map<String, Object>> gamePlayers = new ArrayList<>();

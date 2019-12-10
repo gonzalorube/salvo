@@ -7,7 +7,14 @@
     <!-- <link rel="stylesheet" src="styles/styles.css" /> -->
 </head>
 <body>
-
+    <div class="container">
+        <nav class="navbar">
+            <form class="logOut" id="logout-form-game-view" onsubmit="return false">
+                <p class="user-logged-in" id="user-logged-in-game-view"></p>
+                <button id="logout">Log out</button>
+            </form>
+        </nav>
+    </div>
     <h1>Ship Locations!</h1>
 <!-- En el siguiente H3 se vuelcan los emails de los jugadores participantes de cada juego -->
     <h3 id="players"></h3>

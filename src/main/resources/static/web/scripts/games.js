@@ -1,15 +1,24 @@
-    // Solicito el JSON y, cuando es un éxito, lo itero y voy creando los elementos de lista
-    var gamesJson = $.getJSON("/api/games").done(function recurse(data) {
+        // Solicito el JSON y, cuando es un éxito, lo itero y voy creando los elementos de lista
+        var gamesJson = $.getJSON("/api/games").done(function recurse(data) {
+        if(data[0].player != null){
+            document.getElementById("user-logged-in-main").innerText = data[0].player.name;
+            $("#login-form").toggle();
+        } else {
+            $("#logout-form-main").toggle();
+        }
         var table;
         table = "<tr><th>Name</th><th>Total</th><th>Win</th><th>Tie</th><th>Lost</th></tr>";
         var uName = [];
         for(let k=0; k<data.length; k++){  // Itero el JSON de api/games
-            for(let h=0; h<data[k].gamePlayers.length; h++){  // Itero cada gamePlayer
-                if(uName.indexOf(data[k].gamePlayers[h].player.email) == -1){ // Si el email no está en la lista
-                    uName.push(data[k].gamePlayers[h].player.email);  // lo agrego
-                    table += "<tr><td>" + data[k].gamePlayers[h].player.email + "</td><td>" + getPointsPerPlayer(data[k].gamePlayers[h].player.email) + "</td><td>" + getWins(data[k].gamePlayers[h].player.email) + "</td><td>" + getTieds(data[k].gamePlayers[h].player.email) + "</td><td>" + getDefeats(data[k].gamePlayers[h].player.email) + "</td></tr>";
-                } else { console.log("Already Exists"); }
-            }
+            console.log("mmm");
+                for(let h=0; h<data[k].games.gamePlayers.length; h++){  // Itero cada gamePlayer
+                console.log("mmmmm");
+                    if(uName.indexOf(data[k].games.gamePlayers[h].player.email) == -1){ // Si el email no está en la lista
+                        uName.push(data[k].games.gamePlayers[h].player.email);  // lo agrego
+                        console.log("Ok");
+                        table += "<tr><td>" + data[k].games.gamePlayers[h].player.email + "</td><td>" + getPointsPerPlayer(data[k].games.gamePlayers[h].player.email) + "</td><td>" + getWins(data[k].games.gamePlayers[h].player.email) + "</td><td>" + getTieds(data[k].games.gamePlayers[h].player.email) + "</td><td>" + getDefeats(data[k].games.gamePlayers[h].player.email) + "</td></tr>";
+                    } else { console.log("Already Exists"); }
+                }
         }
 
         var lBoard = document.getElementById("leaderboard").innerHTML = table;
@@ -18,14 +27,11 @@
         function getPointsPerPlayer(player2Compare){
                   var pTotal = 0.0;
                   for(let k=0; k<data.length; k++){  // Itero el JSON de api/games
-                      for(let h=0; h<data[k].gamePlayers.length; h++){  // Itero cada gamePlayer
-                          var player = data[k].gamePlayers[h].player.email;
-                          // console.log(player);
-                          // console.log(player2Compare + " por parámetro");
+                      for(let h=0; h<data[k].games.gamePlayers.length; h++){  // Itero cada gamePlayer
+                          var player = data[k].games.gamePlayers[h].player.email;
                           if(player === player2Compare){
-                              if(data[k].gamePlayers[h].player.scores != null){
-                                  pTotal += parseFloat(data[k].gamePlayers[h].player.scores);
-                                  // console.log(pTotal);
+                              if(data[k].games.gamePlayers[h].player.scores != null){
+                                  pTotal += parseFloat(data[k].games.gamePlayers[h].player.scores);
                               }
                           }
                       }
@@ -36,14 +42,11 @@
               function getWins(player2Compare){
                   var win = 0;
                   for(let k=0; k<data.length; k++){  // Itero el JSON de api7/games
-                      for(let h=0; h<data[k].gamePlayers.length; h++){  // Itero cada gamePlayer
-                          var player = data[k].gamePlayers[h].player.email;
-                          // console.log(player);
-                          // console.log(player2Compare + " por parámetro");
-                          var points = data[k].gamePlayers[h].player.scores;
+                      for(let h=0; h<data[k].games.gamePlayers.length; h++){   // Itero cada gamePlayer
+                          var player = data[k].games.gamePlayers[h].player.email;
+                          var points = data[k].games.gamePlayers[h].player.scores;
                           if(player === player2Compare && points != null && points == "1.0"){ // Mismo jugador? Puntos igual a 1? Sumale 1 al win
                               win++;
-                              // console.log(win);
                           }
                       }
                   }
@@ -53,35 +56,31 @@
               function getTieds(player2Compare){
                   var tied = 0;
                   for(let k=0; k<data.length; k++){  // Itero el JSON de api7/games
-                      for(let h=0; h<data[k].gamePlayers.length; h++){  // Itero cada gamePlayer
-                           var player = data[k].gamePlayers[h].player.email;
-                           // console.log(player);
-                           // console.log(player2Compare + " por parámetro");
-                           var points = data[k].gamePlayers[h].player.scores;
+
+                      for(let h=0; h<data[k].games.gamePlayers.length; h++){  // Itero cada gamePlayer
+                           var player = data[k].games.gamePlayers[h].player.email;
+                           var points = data[k].games.gamePlayers[h].player.scores;
                            if(player === player2Compare && points != null && points == "0.5"){
                                tied++;
-                               // console.log(tied);
                            }
                       }
+
                   }
                   return tied;
                }
 
 
-              function getDefeats
-              (player2Compare){
+              function getDefeats(player2Compare){
                   var lost = 0;
                   for(let k=0; k<data.length; k++){  // Itero el JSON de api7/games
-                      for(let h=0; h<data[k].gamePlayers.length; h++){  // Itero cada gamePlayer
-                          var player = data[k].gamePlayers[h].player.email;
-                          // console.log(player);
-                          // console.log(player2Compare + " por parámetro");
-                          var points = data[k].gamePlayers[h].player.scores;
+                      for(let h=0; h<data[k].games.gamePlayers.length; h++){   // Itero cada gamePlayer
+                          var player = data[k].games.gamePlayers[h].player.email;
+                          var points = data[k].games.gamePlayers[h].player.scores;
                           if(player === player2Compare && points != null && points == "0.0"){
                               lost++;
-                              // console.log(lost);
                           }
                       }
+
                   }
                   return lost;
               }
@@ -107,17 +106,9 @@
       })
       .always(function() { /* Para lanzar por consola cuando se completa, pase lo que pase */
        console.log( "Completed." );
-        // console.log( "I deserve a 'mate amargo'" );
       });
 
-      //var isLoggedIn = false;
-      //console.log(isLoggedIn);
-      var form = document.getElementById("login-form");
-
-      //$("#userEtc").toggle(isLoggedIn);
-      //$("#logout").toggle(isLoggedIn);
-      //$("#submit").toggle(!isLoggedIn);
-      //$("#signUp").toggle(!isLoggedIn);
+        var form = document.getElementById("login-form");
 
         $("#submit").click(function(){
             $.post("/api/login",
@@ -126,31 +117,23 @@
                 password: form.elements.namedItem("password").value
             }).done( function() {
                 console.log("logged in");
-                //isLoggedIn = true;
-                //console.log(isLoggedIn);
-                localStorage.setItem("emailForm", form.elements.namedItem("username").value);
                 form.elements.namedItem("username").value = "";
                 form.elements.namedItem("password").value = "";
                 location.reload();
-                //console.log(isLoggedIn);
+            }).fail( function(){
+                console.log("Invalid password or username");
+                alert("Invalid password or username");
             });
         });
 
-        $(document).ready(function(){
-            var emailForm = localStorage.getItem("emailForm");
-            //if(isLoggedIn)
-            document.getElementById("userEtc").innerText = emailForm;
-        });
-
-        $("#logout").click(function(){
+        $("#logout-form-main").click(function(){
             $.post("/api/logout")
             .done( function() {
                 console.log("logged out");
-                //isLoggedIn = false;
-                //console.log(isLoggedIn);
-                localStorage.clear();
                 location.reload();
-                //console.log(isLoggedIn);
+            }).fail( function(){
+                console.log("There's something wrong about this. Try again.");
+                alert("A frog has jumped out into our servers. It's a mess. Try again in a few minutes");
             });
         });
 
@@ -161,22 +144,17 @@
                         password: form.elements.namedItem("password").value
                     }).done( function() {
                         console.log("New User signed up");
-                        localStorage.setItem("emailForm", form.elements.namedItem("username").value);
                         $.post("/api/login",
                         {
                             username: form.elements.namedItem("username").value,
                             password: form.elements.namedItem("password").value
                         }).done( function() {
                             console.log("New User logged in");
-                            //isLoggedIn = true;
-                            //console.log(isLoggedIn);
                         });
                         form.elements.namedItem("username").value = "";
                         form.elements.namedItem("password").value = "";
                         location.reload();
-                        //console.log(isLoggedIn);
                     }).fail( function() {
                         alert("User already exists");
-                        //console.log(isLoggedIn);
                     });
                 });

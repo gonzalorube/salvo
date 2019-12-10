@@ -1,3 +1,23 @@
+    $.getJSON("/api/games").done(function recurse(data) {
+        if(data[0].player != null){
+            document.getElementById("user-logged-in-game-view").innerText = data[0].player.name;
+        } else {
+            $("#logout-form-game-view").toggle();
+            location.href="/web/games.html";
+        }
+    });
+
+    $("#logout-form-game-view").click(function(){
+            $.post("/api/logout")
+            .done( function() {
+                console.log("logged out");
+                location.reload();
+            }).fail( function(){
+                console.log("There's something wrong about this. Try again.");
+                alert("A frog has jumped out into our servers. It's a mess. Try again in a few minutes");
+            });
+        });
+
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, '\\$&');
@@ -27,6 +47,7 @@ function ajaxCallURL() {
 }
 
 ajaxCallURL().done(function(data) {
+
     var playersTag = document.getElementById("players"); // Traigo la etiqueta H3 del HTML
     var versus = ""; // Inicializo la variable para los Strings que luego volcaré dentro de la etiqueta anterior
     var gpViewId = getParameterByName('gp'); // Obtengo el parámetro que viaja en la variable gp de mi URL
