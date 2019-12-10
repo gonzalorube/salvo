@@ -85,20 +85,37 @@
                   return lost;
               }
               // Obtengo la lista ordenada de id="lista"
-              // var games = document.getElementById("lista");
-              /*var lista ="";
+              var games = document.getElementById("lista");
+              var lista ="";
                       for(let i=0; i<data.length; i++){
-                          lista += "<li>" + "<ul>" + "<li>" + "Game Id: " + data[i].id + "</li>" + "<li>" + "Created: " + data[i].created + "</li>" + "<li>" + "GamePlayers: " + "<ol>";
-                          for(let e=0; e<data[i].gamePlayers.length; e++){
-                              var gPlayer = data[i].gamePlayers[e];
+                        if(data[0].player != null){
+                            for(let e=0; e<data[i].games.gamePlayers.length; e++){
+                                var gPlayer1 = data[i].games.gamePlayers[e];
+                                if(data[0].player.id === gPlayer1.player.id){
+                                    lista += "<a href='#'>";
+                                }
+                            }
+                        }
+                          lista += "<li>" + "<ul>" + "<li>" + "Game Id: " + data[i].games.id + "</li>" + "<li>" + "Created: " + data[i].games.created + "</li>" + "<li>" + "GamePlayers: " + "<ol>";
+                          for(let e=0; e<data[i].games.gamePlayers.length; e++){
+                              var gPlayer = data[i].games.gamePlayers[e];
                               console.log(gPlayer);
-                              lista += "<li>" + "GamePlayer Id: " + data[i].gamePlayers[e].id + "</li>" + "<ul>" + "<li>" + "Player: " + "<ul>" + "<li>" + "Id: " + gPlayer.player.id + "</li>" + "<li>" + "Email: " + gPlayer.player.email + "</li>" + "</ul>" + "</li>" + "</ul>";
+                              lista += "<li>" + "GamePlayer Id: " + data[i].games.gamePlayers[e].id + "</li>" + "<ul>" + "<li>" + "Player: " + "<ul>" + "<li>" + "Id: " + gPlayer.player.id + "</li>" + "<li>" + "Email: " + gPlayer.player.email + "</li>" + "</ul>" + "</li>" + "</ul>";
                           }
                           lista += "</ol>" + "</li>" + "</ul>" + "</li>";
+                          if(data[0].player != null){
+                              for(let e=0; e<data[i].games.gamePlayers.length; e++){
+                                  var gPlayer1 = data[i].games.gamePlayers[e];
+                                  if(data[0].player.id === gPlayer1.player.id){
+                                    lista += "</a>";
+                                  }
+                              }
+                          }
+
                       }
                       // Envío la cadena guardada en "lista" al HTML de la lista ordenada accedida al principio
                       games.innerHTML += lista;
-                      console.log("I can't stop succeeding...");*/
+                      console.log("I can't stop succeeding...");
 
       })
       .fail(function() { /* Por si falla... */
