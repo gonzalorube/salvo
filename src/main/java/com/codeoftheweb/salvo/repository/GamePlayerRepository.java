@@ -9,4 +9,6 @@ import java.util.List;
 
 @RepositoryRestResource
 public interface GamePlayerRepository extends JpaRepository<GamePlayer, Long> {
+    GamePlayer findById(long id);
+    GamePlayer findByUserName(String name);
 }

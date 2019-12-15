@@ -1,14 +1,13 @@
 package com.codeoftheweb.salvo.controller;
 
-import com.codeoftheweb.salvo.model.Game;
-import com.codeoftheweb.salvo.model.GamePlayer;
-import com.codeoftheweb.salvo.model.Salvo;
-import com.codeoftheweb.salvo.model.Ship;
+import com.codeoftheweb.salvo.model.*;
 import com.codeoftheweb.salvo.repository.GamePlayerRepository;
+import com.codeoftheweb.salvo.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -18,12 +17,59 @@ public class GamePlayerController {
     @Autowired
     private GamePlayerRepository gamePlayerRepo;
 
-    @RequestMapping("api/game_view/{gamePlayerId}")
-    private List<Map<String, Object>> getGameView(@PathVariable long gamePlayerId){
+    @Autowired
+    private PlayerRepository playerRepository;
+
+
+/*    private Map<String, Object> getGameView(@PathVariable long gamePlayerId){
         return this.gameView(gamePlayerRepo.findById(gamePlayerId).orElse(null));
+    }*/
+
+ //   @RequestMapping(path = "api/game_view/{gamePlayerId}", method = RequestMethod.POST)
+    @RequestMapping("api/game_view/{gamePlayerId}")
+    public ResponseEntity<Map<String, Object>> getGameView(@PathVariable long gamePlayerId, Authentication authentication){
+        System.out.println(authentication.getName());
+        ResponseEntity<Map<String, Object>> resp;
+        GamePlayer gamePlayerParam = gamePlayerRepo.findById(gamePlayerId);
+        System.out.println(gamePlayerId);
+        System.out.println(gamePlayerParam.getPlayer().getId());
+        Player player = playerRepository.findByUserName(authentication.getName());
+        if(gamePlayerParam != null && player != null) {
+            if (player.getId() != gamePlayerParam.getPlayer().getId()) {
+
+                resp = new ResponseEntity<>(makeMap("error", "user unauthorized"), HttpStatus.UNAUTHORIZED);
+
+            } else {
+                resp = new ResponseEntity<>(this.gameView(gamePlayerParam), HttpStatus.OK);
+            }
+        } else {
+            resp = new ResponseEntity<>(makeMap("error", "no user with that id"), HttpStatus.NOT_FOUND);
+        }
+        return resp;
     }
 
-    private List<Map<String, Object>> gameView(GamePlayer gamePlayer) {
+
+    private Map<String,Object> gameView(GamePlayer gamePlayer){
+        Map<String,Object> dto = new LinkedHashMap<>();
+
+        if(gamePlayer != null){
+            dto.put("id", gamePlayer.getGame().getId());
+            dto.put("creationDate", gamePlayer.getGame().getCreationDate());
+            dto.put("gamePlayer", gamePlayer.getGame().getGamePlayers().stream().map(GamePlayer::gamePlayerDTO));
+            dto.put("ships", gamePlayer.getShips().stream().map(Ship::shipDTO));
+            dto.put("salvoes", gamePlayer.getGame().getGamePlayers()
+                    .stream().flatMap(gp -> gp.getSalvo()
+                            .stream().map(salvo -> salvo.salvoDTO()))
+            );
+        }else{
+            dto.put("error", "no such game");
+        }
+
+        return dto;
+
+    }
+
+    /*private List<Map<String, Object>> gameView(GamePlayer gamePlayer) {
 
         //List<GamePlayer> gamePlayersList = gamePlayerRepo.findById(gamePlayerView.getId()); // Obtengo todos los juegos existentes y los envío a una lista
         List<Map<String, Object>> result = new ArrayList<>(); // Creo una lista de Maps para retornar el resultado
@@ -60,5 +106,11 @@ public class GamePlayerController {
                 result.add(mapResult); // Los agrego a la lista resultante
 
         return result;
+    }*/
+
+    private Map<String, Object> makeMap(String key, Object value) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(key, value);
+        return map;
     }
 }
