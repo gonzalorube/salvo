@@ -2,11 +2,19 @@ package com.codeoftheweb.salvo.controller;
 
 import com.codeoftheweb.salvo.model.Game;
 import com.codeoftheweb.salvo.model.GamePlayer;
+import com.codeoftheweb.salvo.model.Player;
+import com.codeoftheweb.salvo.repository.GamePlayerRepository;
 import com.codeoftheweb.salvo.repository.GameRepository;
+import com.codeoftheweb.salvo.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
@@ -14,6 +22,12 @@ public class GameController {
 
     @Autowired
     private GameRepository gameRepo; // Repositorio de games
+
+    @Autowired
+    private PlayerRepository playerRepo;
+
+    @Autowired
+    private GamePlayerRepository gamePlayerRepo;
 
     @RequestMapping("api/games") // Queremos que ésta sea la ruta
 
@@ -71,7 +85,32 @@ public class GameController {
                     result.add(metaMapResult); // Lo agrego a la lista resultante
                 }
             }
- /*       } else {
+        return result;
+    }
+
+    @RequestMapping(path = "api/games", method = RequestMethod.POST)
+    public ResponseEntity<Map<String,Object>> createGame(Authentication authentication){
+        ResponseEntity<Map<String, Object>> response;
+        if(authentication == null){
+            response = new ResponseEntity<>(makeMap("error", "no user logged in"), HttpStatus.UNAUTHORIZED);
+        }else {
+            Player player = playerRepo.findByUserName(authentication.getName());
+            Game newGame = gameRepo.save(new Game(LocalDateTime.now()));
+            GamePlayer newGamePlayer = gamePlayerRepo.save(new GamePlayer(newGame.getCreationDate(), newGame, player));
+
+            response = new ResponseEntity<>(makeMap("gpId", newGamePlayer.getId()), HttpStatus.CREATED);
+        }
+
+        return response;
+    }
+
+    private Map<String, Object> makeMap(String key, Object value) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(key, value);
+        return map;
+    }
+
+    /*       } else {
             for (Game game : gamesList) {
 
                 if (game != null) {
@@ -107,6 +146,4 @@ public class GameController {
                 }
             }
         }*/
-        return result;
-    }
 }

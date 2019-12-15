@@ -5,6 +5,7 @@
             $("#login-form").toggle();
         } else {
             $("#logout-form-main").toggle();
+            $("#btnCrtGame").toggle();
         }
         var table;
         table = "<tr><th>Name</th><th>Total</th><th>Win</th><th>Tie</th><th>Lost</th></tr>";
@@ -116,9 +117,8 @@
                       }
                       // Envío la cadena guardada en "lista" al HTML de la lista ordenada accedida al principio
                       games.innerHTML += lista;
-                      console.log("I can't stop succeeding...");
-
-      })
+                      //console.log("I can't stop succeeding...");
+        })
       .fail(function() { /* Por si falla... */
        console.log( "Salió todo mal, ¡RAJEMOS!" );
       })
@@ -176,3 +176,19 @@
                         alert("User already exists");
                     });
                 });
+
+        $("#btnCrtGame").click(function(){
+                    fetch('/api/games',{
+                        method: 'POST'
+                    }).then(res => {
+                      	if(res.ok){
+                      	    return res.json()
+                      	}else{
+                      		return Promise.reject(res.json())
+                      	}
+                    }).then(json => {
+
+                      	location.href = '/web/game.html?gp=' + json.gpId
+                    }).catch(error => error)
+                    .then(error => console.log(error))
+        });

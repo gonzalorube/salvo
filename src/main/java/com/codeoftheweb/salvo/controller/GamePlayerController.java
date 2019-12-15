@@ -69,6 +69,12 @@ public class GamePlayerController {
 
     }
 
+    private Map<String, Object> makeMap(String key, Object value) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(key, value);
+        return map;
+    }
+
     /*private List<Map<String, Object>> gameView(GamePlayer gamePlayer) {
 
         //List<GamePlayer> gamePlayersList = gamePlayerRepo.findById(gamePlayerView.getId()); // Obtengo todos los juegos existentes y los envío a una lista
@@ -107,10 +113,4 @@ public class GamePlayerController {
 
         return result;
     }*/
-
-    private Map<String, Object> makeMap(String key, Object value) {
-        Map<String, Object> map = new HashMap<>();
-        map.put(key, value);
-        return map;
-    }
 }
