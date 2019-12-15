@@ -92,7 +92,8 @@
                             for(let e=0; e<data[i].games.gamePlayers.length; e++){
                                 var gPlayer1 = data[i].games.gamePlayers[e];
                                 if(data[0].player.id === gPlayer1.player.id){
-                                    lista += "<a href='#'>";
+                                    console.log(data[i].games.id);
+                                    lista += "<a href='/web/game.html?gp=" + data[i].games.id + "'>";
                                 }
                             }
                         }

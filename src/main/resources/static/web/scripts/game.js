@@ -7,7 +7,7 @@
         }
     });
 
-    $("#logout-form-game-view").click(function(){
+    $("#logout-form-game-viewg").click(function(){
             $.post("/api/logout")
             .done( function() {
                 console.log("logged out");
