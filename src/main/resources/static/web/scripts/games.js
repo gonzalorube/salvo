@@ -88,31 +88,31 @@
               var games = document.getElementById("lista");
               var lista ="";
                       for(let i=0; i<data.length; i++){
-                        if(data[0].player != null){
+
+                          lista += "<li>" + "<ul>" + "<li>" + "Game Id: " + data[i].games.id + "</li>" + "<li>" + "Created: " + data[i].games.created + "</li>" + "<li>" + "GamePlayers: " + "<ol>";
+                          if(data[0].player != null){
                             for(let e=0; e<data[i].games.gamePlayers.length; e++){
                                 var gPlayer1 = data[i].games.gamePlayers[e];
-                                if(data[0].player.id === gPlayer1.player.id){
-                                    console.log(data[i].games.id);
-                                    lista += "<a href='/web/game.html?gp=" + data[i].games.id + "'>";
-                                }
+                                    if(data[0].player.id === gPlayer1.player.id){
+                                        console.log(data[i].games.gamePlayers[e].id);
+                                            lista += "<a href='/web/game.html?gp=" + data[i].games.gamePlayers[e].id + "'>";
+                                    }
                             }
-                        }
-                          lista += "<li>" + "<ul>" + "<li>" + "Game Id: " + data[i].games.id + "</li>" + "<li>" + "Created: " + data[i].games.created + "</li>" + "<li>" + "GamePlayers: " + "<ol>";
+                          }
                           for(let e=0; e<data[i].games.gamePlayers.length; e++){
                               var gPlayer = data[i].games.gamePlayers[e];
                               console.log(gPlayer);
                               lista += "<li>" + "GamePlayer Id: " + data[i].games.gamePlayers[e].id + "</li>" + "<ul>" + "<li>" + "Player: " + "<ul>" + "<li>" + "Id: " + gPlayer.player.id + "</li>" + "<li>" + "Email: " + gPlayer.player.email + "</li>" + "</ul>" + "</li>" + "</ul>";
                           }
-                          lista += "</ol>" + "</li>" + "</ul>" + "</li>";
                           if(data[0].player != null){
-                              for(let e=0; e<data[i].games.gamePlayers.length; e++){
-                                  var gPlayer1 = data[i].games.gamePlayers[e];
-                                  if(data[0].player.id === gPlayer1.player.id){
+                            for(let e=0; e<data[i].games.gamePlayers.length; e++){
+                                var gPlayer1 = data[i].games.gamePlayers[e];
+                                if(data[0].player.id === gPlayer1.player.id){
                                     lista += "</a>";
-                                  }
-                              }
+                                }
+                            }
                           }
-
+                          lista += "</ol>" + "</li>" + "</ul>" + "</li>";
                       }
                       // Envío la cadena guardada en "lista" al HTML de la lista ordenada accedida al principio
                       games.innerHTML += lista;
