@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -92,13 +93,40 @@ public class GameController {
     public ResponseEntity<Map<String,Object>> createGame(Authentication authentication){
         ResponseEntity<Map<String, Object>> response;
         if(authentication == null){
-            response = new ResponseEntity<>(makeMap("error", "no user logged in"), HttpStatus.UNAUTHORIZED);
+            response = new ResponseEntity<>(makeMap("error", "You must be logged in"), HttpStatus.UNAUTHORIZED);
         }else {
             Player player = playerRepo.findByUserName(authentication.getName());
             Game newGame = gameRepo.save(new Game(LocalDateTime.now()));
             GamePlayer newGamePlayer = gamePlayerRepo.save(new GamePlayer(newGame.getCreationDate(), newGame, player));
 
             response = new ResponseEntity<>(makeMap("gpId", newGamePlayer.getId()), HttpStatus.CREATED);
+        }
+
+        return response;
+    }
+
+    @RequestMapping(path = "api/games/{gameId}/players", method = RequestMethod.POST)
+    public ResponseEntity<Map<String,Object>> joinGame(Authentication authentication, @PathVariable long gameId){
+        ResponseEntity<Map<String, Object>> response;
+        if(authentication == null){
+            response = new ResponseEntity<>(makeMap("error", "You must be logged in first"), HttpStatus.UNAUTHORIZED);
+        }else {
+
+            Game game = gameRepo.findById(gameId).orElse(null);
+            if(game == null){
+                response = new ResponseEntity<>(makeMap("error", "No such game"), HttpStatus.NOT_FOUND);
+            } else if (game.getGamePlayers().size() > 1){
+                response = new ResponseEntity<>(makeMap("error", "No place in this game"), HttpStatus.FORBIDDEN);
+            } else {
+                Player player = playerRepo.findByUserName(authentication.getName());
+                if(game.getGamePlayers().stream().anyMatch(gp -> gp.getPlayer().getId() == player.getId())){
+                    response = new ResponseEntity<>(makeMap("error", "User already joined"), HttpStatus.FORBIDDEN);
+                } else{
+                    GamePlayer newGamePlayer = gamePlayerRepo.save(new GamePlayer(LocalDateTime.now(), game, player));
+                    response = new ResponseEntity<>(makeMap("gpId", newGamePlayer.getId()), HttpStatus.CREATED);
+                }
+            }
+
         }
 
         return response;
