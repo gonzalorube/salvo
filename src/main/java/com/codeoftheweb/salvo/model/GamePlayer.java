@@ -106,7 +106,10 @@ public class GamePlayer {
         return this.player.getScore(game);
     }
 
-    //DTO (data transfer object) para administrar la info de GamePlayer
+    public GamePlayer getOpponent(){
+        return this.getGame().getGamePlayers().stream().filter(gp -> gp.getId() != this.getId()).findFirst().orElse(null);
+    }
+
     public Map<String, Object> gamePlayerDTO(){
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("id", this.getId());

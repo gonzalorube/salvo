@@ -1,13 +1,18 @@
-    $.getJSON("/api/games").done(function recurse(data) {
+
+/*
+============================
+============================
+*/
+$.getJSON("/api/games").done(function recurse(data) {
         if(data[0].player != null){
-            document.getElementById("user-logged-in-game-view").innerText = data[0].player.name;
+            document.getElementById("user-logged-in-main").innerText = data[0].player.name;
         } else {
-            $("#logout-form-game-view").toggle();
+            $("#logout-form-main").toggle();
             location.href="/web/games.html";
         }
     });
 
-    $("#logout-form-game-viewg").click(function(){
+    $("#logout-form-game-view").click(function(){
             $.post("/api/logout")
             .done( function() {
                 console.log("logged out");
@@ -46,14 +51,14 @@ function ajaxCallURL() {
     return ajxCll;
 }
 
-ajaxCallURL().done(function(data) {
+ajaxCallURL().done(function createTables(data) {
     console.log("Listo");
     console.log(data);
     var playersTag = document.getElementById("players"); // Traigo la etiqueta H3 del HTML
     var versus = ""; // Inicializo la variable para los Strings que luego volcaré dentro de la etiqueta anterior
     var gpViewId = getParameterByName('gp'); // Obtengo el parámetro que viaja en la variable gp de mi URL
     console.log("listo");
-    for(o in data){
+/*    for(o in data){
         console.log(data[o]);
     }
     console.log(data.ships);
@@ -91,6 +96,7 @@ ajaxCallURL().done(function(data) {
                 }
         }
     }
+    */
     //var gpViewId = getParameterByName('gp');
    console.log(gpViewId);
 //   console.log(data.gamePlayers[0] + " " + data.gamePlayers[1]);
@@ -116,3 +122,278 @@ ajaxCallURL().done(function(data) {
     playersTag.innerHTML = versus; // los Strings guardados en versus se convierten en HTML de la etiqueta H3 de game.html
     //document.getElementsByClassName("cell").style.minWidth = "66px";
 });
+
+let data, player, opponent;
+let params = new URLSearchParams(location.search);
+let gamePlayerId = params.get('gp');
+let gpId = +gamePlayerId;
+
+getGameData(gpId,true)
+
+function getGameData(gpId, viewShips){
+
+	document.getElementById("dock").innerHTML = `<div id="display">
+									                <p>Welcome...</p>
+									            </div>
+									            <div id="board">
+
+									            </div>
+									            `
+	document.getElementById("grid-ships").innerHTML = ""
+	document.getElementById("grid-salvoes").innerHTML = ""
+
+	createGrid(11, document.getElementById('grid-ships'), 'ships')
+
+
+	fetch('/api/game_view/' + gamePlayerId)
+	.then(res => {
+		if(res.ok){
+			return res.json()
+
+		}else{
+			throw new Error(res.statusText)
+		}
+	})
+	.then(json => {
+		 data = json
+
+		 if(data.ships.length > 0){
+		 	getShips(data.ships)
+		 	createGrid(11, document.getElementById('grid-salvoes'), 'salvoes')
+		 	document.getElementById('grid-ships').classList.add('active')
+		 	document.getElementById('grid-salvoes').classList.remove('active')
+		 	document.getElementById("board").innerHTML += '<div class="hide" id="fire"><button class="btn" onclick="readyToShoot()">Fire!</button></div>'
+		 	document.getElementById("board").innerHTML += '<div><button id="grid-view" class="btn" onclick="gridView(event)">View Salvoes</button></div>'
+		 	if(!viewShips){
+		 		document.getElementById('grid-view').click()
+		 	}
+		 	target()
+		 } else {
+		 	document.getElementById("board").innerHTML += '<div><button class="btn" onclick="addShips()">Add Ships</button></div>'
+		 	createShips('carrier', 5, 'horizontal', document.getElementById('dock'),false)
+			createShips('battleship', 4, 'horizontal', document.getElementById('dock'),false)
+			createShips('submarine', 3, 'horizontal', document.getElementById('dock'),false)
+			createShips('destroyer', 3, 'horizontal', document.getElementById('dock'),false)
+			createShips('patrol_boat', 2, 'horizontal', document.getElementById('dock'),false)
+
+		 }
+
+		 data.gamePlayer.forEach(e =>{
+		 	if(e.id == gpId){
+		 		player = e.player
+		 	} else {
+		 		opponent = e.player
+		 	}
+		 })
+		 if(data.salvoes.length > 0){
+		 	getSalvoes(data.salvoes, player.id)
+		 }
+
+
+
+
+	})
+	.catch(error => console.log(error))
+
+}
+
+function getShips(ships){
+
+	ships.forEach(ship => {
+
+		createShips(ship.type,
+					ship.locations.length,
+					ship.locations[0][0] == ship.locations[1][0] ? "horizontal" : "vertical",
+					document.getElementById(`ships${ship.locations[0]}`),
+					true
+					)
+
+
+
+	})
+}
+
+function getSalvoes(salvoes, playerId){
+	salvoes.forEach(salvo => {
+		salvo.locations.forEach(loc => {
+			if(salvo.player == playerId){
+				let cell = document.getElementById("salvoes"+loc)
+				salvo.hits.includes(loc) ? cell.classList.add('hit') : cell.classList.add('water')
+				cell.innerText = salvo.turn
+			}else{
+				let cell = document.getElementById("ships"+loc)
+				if(cell.classList.contains('busy-cell')){
+					cell.style.background = "red"
+				}
+
+			}
+		})
+
+		if(salvo.sunken != null){
+			salvo.sunken.forEach(ship => {
+				if(salvo.player == playerId){
+					ship.locations.forEach(loc => {
+						let cell = document.getElementById("salvoes"+loc)
+						cell.classList.add('sunken')
+					})
+				}
+
+			})
+		}
+
+	})
+}
+
+let shipsCreated = [];
+/*	{
+		"type": "Carrier",
+		"locations": ["A1", "A2", "A3", "A4", "A5"]
+	},
+	{
+		"type": "Battleship",
+		"locations": ["A10", "B10", "C10", "D10"]
+	},
+	{
+		"type": "Submarine",
+		"locations": ["C1", "C2", "C3"]
+	},
+	{
+		"type": "Destroyer",
+		"locations": ["D1", "D2", "D3"]
+	},
+	{
+		"type": "Patrol Boat",
+		"locations": ["E1", "E2"]
+	}
+]
+*/
+
+function addShips(){
+	let ships = []
+    var countItems = 0;
+    var countHLocations = 0;
+    var countVLocations = 0;
+	document.querySelectorAll(".grid-item").forEach( item => {
+	    countItems++;
+	    console.log(countItems);
+		let ship = {}
+
+		ship.type = item.id
+		ship.locations = []
+
+		if(item.dataset.orientation == "horizontal"){
+		    console.log("Testing: ok");
+			for(i = 0; i < item.dataset.length; i++){
+			    countHLocations++;
+			    console.log(countHLocations);
+				ship.locations.push(item.dataset.y + (parseInt(item.dataset.x) + i))
+			}
+		}else{
+			for(i = 0; i < item.dataset.length; i++){
+			    countVLocations++;
+			    console.log(countVLocations);
+				ship.locations.push(String.fromCharCode(item.dataset.y.charCodeAt() + i) + item.dataset.x)
+			}
+		}
+
+		ships.push(ship)
+	})
+
+	sendShips(ships,gpId)
+}
+
+
+function sendShips(ships, gpId){
+    console.log(ships);
+	let url = '/api/games/players/' + gamePlayerId + '/ships'
+	let init = {
+		method: 'POST',
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(ships)
+	}
+	fetch(url,init)
+	.then(res => {
+		if(res.ok){
+			return res.json()
+		}else{
+			return Promise.reject(res.json())
+		}
+	})
+	.then(json => {
+
+		getGameData(gp,true)
+	})
+	.catch(error => error)
+	.then(error => console.log(error))
+
+}
+
+$('#createShips').click(function(){
+    sendhips(shipsCreated);
+});
+
+function gridView(ev){
+
+	let text = ev.target.innerText == "View Salvoes" ? "View Ships" : "View Salvoes"
+
+	ev.target.innerText = text
+
+	document.querySelectorAll(".grid").forEach(grid => grid.classList.toggle("active"))
+	document.getElementById("fire").classList.toggle("hide")
+}
+
+function target(){
+	document.querySelectorAll("#grid-salvoes .grid-cell").forEach(cell => cell.addEventListener('click',aim))
+}
+
+function aim(evt){
+	if(!evt.target.classList.contains('hit')){
+		if(document.querySelectorAll('.target').length < 5){
+			evt.target.classList.toggle('target')
+		}else{
+			console.log('to many shots')
+		}
+	} else{
+		console.log('you already have shooted here')
+	}
+}
+
+function readyToShoot(){
+
+	let shots = Array.from(document.querySelectorAll('.target')).map(cell => cell.dataset.y + cell.dataset.x)
+
+	shoot(shots, gpId)
+}
+
+function shoot(shots,gpId){
+	let url = '/api/games/players/'+ gamePlayerId +'/salvoes'
+	let init = {
+		method: 'POST',
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(shots)
+	}
+	fetch(url,init)
+	.then(res => {
+		if(res.ok){
+			return res.json()
+		}else{
+			return Promise.reject(res.json())
+		}
+	})
+	.then(json => {
+
+		getGameData(gpId,false)
+	})
+	.catch(error => error)
+	.then(error => console.log(error))
+
+}
+
+/*
+=====================================
+=====================================
+*/

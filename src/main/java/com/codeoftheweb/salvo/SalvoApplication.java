@@ -96,68 +96,68 @@ public class SalvoApplication {
 			gamePlayer11 = gamePlayerRepository.save(new GamePlayer(date.plus(5, ChronoUnit.HOURS), game6, player5));
 
 
-			gamePlayer1.addShip(new Ship("Submarine", Arrays.asList("E1", "F1", "G1")));
-			gamePlayer1.addShip(new Ship("Destroyer", Arrays.asList("H2", "H3", "H4")));
-			gamePlayer1.addShip(new Ship("Patrol Boat", Arrays.asList("B4", "B5")));
+			gamePlayer1.addShip(new Ship("submarine", Arrays.asList("E1", "F1", "G1")));
+			gamePlayer1.addShip(new Ship("destroyer", Arrays.asList("H2", "H3", "H4")));
+			gamePlayer1.addShip(new Ship("patrol_boat", Arrays.asList("B4", "B5")));
 
-			gamePlayer2.addShip(new Ship("Destroyer", Arrays.asList("B5", "C5", "D5")));
-			gamePlayer2.addShip(new Ship("Patrol Boat", Arrays.asList("F1", "F2")));
+			gamePlayer2.addShip(new Ship("destroyer", Arrays.asList("B5", "C5", "D5")));
+			gamePlayer2.addShip(new Ship("patrol_boat", Arrays.asList("F1", "F2")));
 
-			gamePlayer3.addShip(new Ship("Patrol Boat", Arrays.asList("C6","C7")));
-			gamePlayer3.addShip(new Ship("Destroyer", Arrays.asList("B5", "C5", "D5")));
+			gamePlayer3.addShip(new Ship("patrol_boat", Arrays.asList("C6","C7")));
+			gamePlayer3.addShip(new Ship("destroyer", Arrays.asList("B5", "C5", "D5")));
 
-			gamePlayer4.addShip(new Ship("Submarine", Arrays.asList("A2", "A3", "A4")));
-			gamePlayer4.addShip(new Ship("Patrol Boat", Arrays.asList("G6", "H6")));
+			gamePlayer4.addShip(new Ship("submarine", Arrays.asList("A2", "A3", "A4")));
+			gamePlayer4.addShip(new Ship("patrol_boat", Arrays.asList("G6", "H6")));
 
-			gamePlayer5.addShip(new Ship("Destroyer", Arrays.asList("B5", "C5", "D5")));
-			gamePlayer5.addShip(new Ship("Patrol Boat", Arrays.asList("C6", "C7")));
+			gamePlayer5.addShip(new Ship("destroyer", Arrays.asList("B5", "C5", "D5")));
+			gamePlayer5.addShip(new Ship("patrol_boat", Arrays.asList("C6", "C7")));
 
-			gamePlayer6.addShip(new Ship("Submarine", Arrays.asList("A2", "A3", "A4")));
-			gamePlayer6.addShip(new Ship("Patrol Boat", Arrays.asList("G6", "H6")));
+			gamePlayer6.addShip(new Ship("submarine", Arrays.asList("A2", "A3", "A4")));
+			gamePlayer6.addShip(new Ship("patrol_boat", Arrays.asList("G6", "H6")));
 
-			gamePlayer7.addShip(new Ship("Destroyer", Arrays.asList("B5", "C5", "D5")));
-			gamePlayer7.addShip(new Ship("Patrol Boat", Arrays.asList("C6", "C7")));
+			gamePlayer7.addShip(new Ship("destroyer", Arrays.asList("B5", "C5", "D5")));
+			gamePlayer7.addShip(new Ship("patrol_boat", Arrays.asList("C6", "C7")));
 
-			gamePlayer8.addShip(new Ship("Submarine", Arrays.asList("A2", "A3", "A4")));
-			gamePlayer8.addShip(new Ship("Patrol Boat", Arrays.asList("G6", "H6")));
+			gamePlayer8.addShip(new Ship("submarine", Arrays.asList("A2", "A3", "A4")));
+			gamePlayer8.addShip(new Ship("patrol_boat", Arrays.asList("G6", "H6")));
 
-			gamePlayer9.addShip(new Ship("Destroyer", Arrays.asList("B5", "C5", "D5")));
-			gamePlayer9.addShip(new Ship("Patrol Boat", Arrays.asList("C6", "C7")));
+			gamePlayer9.addShip(new Ship("destroyer", Arrays.asList("B5", "C5", "D5")));
+			gamePlayer9.addShip(new Ship("patrol_boat", Arrays.asList("C6", "C7")));
 
-			gamePlayer10.addShip(new Ship("Submarine", Arrays.asList("A2", "A3", "A4")));
-			gamePlayer10.addShip(new Ship("Patrol Boat", Arrays.asList("G6", "H6")));
+			gamePlayer10.addShip(new Ship("submarine", Arrays.asList("A2", "A3", "A4")));
+			gamePlayer10.addShip(new Ship("patrol_boat", Arrays.asList("G6", "H6")));
 
-			gamePlayer1.addSalvo(new Salvo("1", Arrays.asList("B5", "C5", "F1")));
-			gamePlayer2.addSalvo(new Salvo("1", Arrays.asList("B4", "B5", "B6")));
+			gamePlayer1.addSalvo(new Salvo(1, Arrays.asList("B5", "C5", "F1")));
+			gamePlayer2.addSalvo(new Salvo(1, Arrays.asList("B4", "B5", "B6")));
 
-			gamePlayer1.addSalvo(new Salvo("2", Arrays.asList("F2", "D5")));
-			gamePlayer2.addSalvo(new Salvo("2", Arrays.asList("E1", "H3", "A2")));
+			gamePlayer1.addSalvo(new Salvo(2, Arrays.asList("F2", "D5")));
+			gamePlayer2.addSalvo(new Salvo(2, Arrays.asList("E1", "H3", "A2")));
 
-			gamePlayer3.addSalvo(new Salvo("1", Arrays.asList("A2", "A4", "G6")));
-			gamePlayer4.addSalvo(new Salvo("1", Arrays.asList("B5", "D5", "C7")));
+			gamePlayer3.addSalvo(new Salvo(1, Arrays.asList("A2", "A4", "G6")));
+			gamePlayer4.addSalvo(new Salvo(1, Arrays.asList("B5", "D5", "C7")));
 
-			gamePlayer3.addSalvo(new Salvo("2", Arrays.asList("A3", "H6")));
-			gamePlayer4.addSalvo(new Salvo("2", Arrays.asList("C5", "C6")));
+			gamePlayer3.addSalvo(new Salvo(2, Arrays.asList("A3", "H6")));
+			gamePlayer4.addSalvo(new Salvo(2, Arrays.asList("C5", "C6")));
 
-			gamePlayer5.addSalvo(new Salvo("1", Arrays.asList("G6", "H6", "H4")));
-			gamePlayer6.addSalvo(new Salvo("1", Arrays.asList("H1", "H2", "H3")));
+			gamePlayer5.addSalvo(new Salvo(1, Arrays.asList("G6", "H6", "H4")));
+			gamePlayer6.addSalvo(new Salvo(1, Arrays.asList("H1", "H2", "H3")));
 
-			gamePlayer5.addSalvo(new Salvo("2", Arrays.asList("A2", "A3", "D8")));
-			gamePlayer6.addSalvo(new Salvo("2", Arrays.asList("E1", "F2", "G3")));
+			gamePlayer5.addSalvo(new Salvo(2, Arrays.asList("A2", "A3", "D8")));
+			gamePlayer6.addSalvo(new Salvo(2, Arrays.asList("E1", "F2", "G3")));
 
-			gamePlayer7.addSalvo(new Salvo("1", Arrays.asList("A3", "A4", "F7")));
-			gamePlayer8.addSalvo(new Salvo("1", Arrays.asList("B5", "C6", "H1")));
+			gamePlayer7.addSalvo(new Salvo(1, Arrays.asList("A3", "A4", "F7")));
+			gamePlayer8.addSalvo(new Salvo(1, Arrays.asList("B5", "C6", "H1")));
 
-			gamePlayer7.addSalvo(new Salvo("2", Arrays.asList("A2", "G6", "H6")));
-			gamePlayer8.addSalvo(new Salvo("2", Arrays.asList("C5", "C7", "D5")));
+			gamePlayer7.addSalvo(new Salvo(2, Arrays.asList("A2", "G6", "H6")));
+			gamePlayer8.addSalvo(new Salvo(2, Arrays.asList("C5", "C7", "D5")));
 
-			gamePlayer9.addSalvo(new Salvo("1", Arrays.asList("A1", "A2", "A3")));
-			gamePlayer10.addSalvo(new Salvo("1", Arrays.asList("B5", "B6", "C7")));
+			gamePlayer9.addSalvo(new Salvo(1, Arrays.asList("A1", "A2", "A3")));
+			gamePlayer10.addSalvo(new Salvo(1, Arrays.asList("B5", "B6", "C7")));
 
-			gamePlayer9.addSalvo(new Salvo("2", Arrays.asList("G6", "G7", "G8")));
-			gamePlayer10.addSalvo(new Salvo("2", Arrays.asList("C6", "D6", "E6")));
+			gamePlayer9.addSalvo(new Salvo(2, Arrays.asList("G6", "G7", "G8")));
+			gamePlayer10.addSalvo(new Salvo(2, Arrays.asList("C6", "D6", "E6")));
 
-			gamePlayer10.addSalvo(new Salvo("3", Arrays.asList("H1", "H8")));
+			gamePlayer10.addSalvo(new Salvo(3, Arrays.asList("H1", "H8")));
 
 
 			gamePlayerRepository.save(gamePlayer1);

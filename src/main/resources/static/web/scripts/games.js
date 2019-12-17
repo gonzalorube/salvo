@@ -89,7 +89,7 @@
                   var lista ="";
                           for(let i=0; i<data.length; i++){
 
-                              lista += "<li>" + "<ul>" + "<li>" + "Game Id: " + data[i].games.id + "</li>" + "<li>" + "Created: " + data[i].games.created + "</li>" + "<li>" + "GamePlayers: " + "<ol>";
+                              lista += "<li>" + "<div class='col-lg'>" + "<li>" + "<ul class='gameInfo'>" + "<li>" + "Game " + data[i].games.id + "</li>" + "<li>" + "Created: " + data[i].games.created + "</li>" + "<li>" + "Players: " + "<ol>";
                               if(data[0].player != null){
                                 for(let e=0; e<data[i].games.gamePlayers.length; e++){
                                     var gPlayer1 = data[i].games.gamePlayers[e];
@@ -102,7 +102,7 @@
                               for(let e=0; e<data[i].games.gamePlayers.length; e++){
                                   var gPlayer = data[i].games.gamePlayers[e];
                                   //console.log(gPlayer);
-                                  lista += "<li>" + "GamePlayer Id: " + data[i].games.gamePlayers[e].id + "</li>" + "<ul>" + "<li>" + "Player: " + "<ul>" + "<li>" + "Id: " + gPlayer.player.id + "</li>" + "<li>" + "Email: " + gPlayer.player.email + "</li>" + "</ul>" + "</li>" + "</ul>";
+                                  lista += "<ul>" + "<li>" + "User " + gPlayer.player.email + "</li>" + "</ul>";
                               }
                               if(data[0].player != null){
                                 var count = 0;
@@ -114,10 +114,10 @@
                                     }
                                 }
                                 if(count == 1){
-                                    lista += "<button type='button' id='" + data[i].games.id + "' data-game=''>Join Game</button>";
+                                    lista += "<button type='button' class='btn btn-dark' id='" + data[i].games.id + "' data-game=''>Join</button>";
                                 }
                               }
-                              lista += "</ol>" + "</li>" + "</ul>" + "</li>";
+                              lista += "</ol>" + "</li>" + "</ul>" + "</li>" + "</div>" + "</li>";
                           }
                           // Envío la cadena guardada en "lista" al HTML de la lista ordenada accedida al principio
                           games.innerHTML += lista;
